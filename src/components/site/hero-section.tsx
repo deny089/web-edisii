@@ -1,0 +1,57 @@
+import Image from "next/image";
+
+type HeroSectionProps = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  secondaryDescription: string;
+  imageUrl: string;
+  imageAlt: string;
+};
+
+export function HeroSection({
+  title,
+  description,
+  secondaryDescription,
+  imageUrl,
+  imageAlt,
+}: HeroSectionProps) {
+  return (
+    <section
+      id="about"
+      className="relative flex h-[520px] w-full scroll-mt-24 items-end overflow-hidden bg-black text-white sm:h-[580px] md:h-[620px]"
+    >
+      <div className="absolute inset-0 z-0 select-none">
+        <Image
+          src={imageUrl}
+          alt={imageAlt}
+          fill
+          sizes="100vw"
+          className="object-cover object-center grayscale"
+          priority
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.32),rgba(0,0,0,0.54))]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_left,rgba(0,0,0,0.30),transparent_34%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.76))]" />
+      </div>
+
+      <div className="container relative z-10 mx-auto w-full px-6 pb-8 md:px-16 md:pb-12">
+        <div className="grid max-w-[1240px] grid-cols-1 gap-6 md:grid-cols-[320px_430px] md:items-start md:justify-start md:gap-24">
+          <div className="flex max-w-[340px] flex-col gap-5">
+            <h1 className="text-[16px] leading-[1.5] text-white">
+              {title}
+            </h1>
+            <p className="text-[16px] leading-[1.65] text-white/96">
+              {description}
+            </p>
+          </div>
+          <div className="max-w-[430px]">
+            <p className="text-[15px] leading-[1.65] text-white/96 md:text-[16px] md:leading-[1.75]">
+              {secondaryDescription}
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
