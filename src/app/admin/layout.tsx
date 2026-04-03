@@ -1,18 +1,14 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#f6f1e9,#fbfaf7)] text-stone-950">
-      <header className="border-b border-black/10 bg-white/80 backdrop-blur">
-        <div className="container mx-auto flex h-20 items-center justify-between px-6 md:px-12">
+    <div className="min-h-screen bg-[#f5f6f8] text-slate-900">
+      <header className="border-b border-slate-200 bg-white">
+        <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-3 px-4 py-4 md:h-16 md:flex-row md:items-center md:justify-between md:gap-0 md:px-8 md:py-0">
           <div>
-            <p className="text-xs uppercase tracking-[0.28em] text-stone-500">Admin Dashboard</p>
-            <h1 className="text-2xl font-serif tracking-[0.18em] uppercase">EDISII</h1>
+            <p className="text-[11px] uppercase tracking-[0.24em] text-slate-500">Admin Dashboard</p>
+            <h1 className="mt-1 text-[22px] font-semibold leading-none">EDISII</h1>
           </div>
-          <Link href="/" className="text-sm font-medium underline underline-offset-4">
-            View public site
-          </Link>
         </div>
       </header>
       {children}
