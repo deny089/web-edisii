@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { FrostPanel } from "@/components/site/frost-panel";
 
@@ -28,17 +28,44 @@ export function EventsSection({
   imageUrl,
   imageAlt,
 }: EventsSectionProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalMounted, setIsModalMounted] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const closeTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!isModalOpen) {
+    if (!isModalMounted) {
+      return;
+    }
+
+    if (closeTimerRef.current) {
+      window.clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+
+    const frame = window.requestAnimationFrame(() => {
+      setIsModalVisible(true);
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [isModalMounted]);
+
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current) {
+        window.clearTimeout(closeTimerRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isModalMounted) {
       document.body.style.removeProperty("overflow");
       return;
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setIsModalOpen(false);
+        closeModal();
       }
     };
 
@@ -49,7 +76,19 @@ export function EventsSection({
       document.body.style.removeProperty("overflow");
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isModalOpen]);
+  }, [isModalMounted]);
+
+  const openModal = () => {
+    setIsModalMounted(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+    closeTimerRef.current = window.setTimeout(() => {
+      setIsModalMounted(false);
+      closeTimerRef.current = null;
+    }, 300);
+  };
 
   const eventGallery = [
     "/images/events/Rectangle%2023.png",
@@ -77,7 +116,7 @@ export function EventsSection({
               </div>
               <button
                 type="button"
-                onClick={() => setIsModalOpen(true)}
+                onClick={openModal}
                 className="mt-7 inline-flex min-h-11 w-full items-center justify-center border border-[#d0d0d0] bg-[#d9d9d7] px-6 py-3 text-[14px] tracking-[0.16em] uppercase text-black transition-colors hover:bg-[#cececc] sm:min-w-[230px] sm:w-auto sm:px-8 sm:text-[16px]"
               >
                 {ctaLabel}
@@ -87,18 +126,26 @@ export function EventsSection({
         </div>
       </section>
 
-      {isModalOpen ? (
-        <div className="fixed inset-0 z-[100] bg-black/20 px-2 py-2 md:px-6 md:py-4">
-          <div className="mx-auto h-full w-full max-w-[1180px] overflow-y-auto bg-white shadow-[0_24px_80px_rgba(0,0,0,0.16)]">
+      {isModalMounted ? (
+        <div
+          className={`fixed inset-0 z-[100] bg-black/20 px-2 py-2 transition-opacity duration-300 md:px-6 md:py-4 ${
+            isModalVisible ? "opacity-100" : "opacity-0"
+          } ${isModalVisible ? "pointer-events-auto" : "pointer-events-none"}`}
+        >
+          <div
+            className={`mx-auto h-full w-full max-w-[1180px] overflow-y-auto bg-white shadow-[0_24px_80px_rgba(0,0,0,0.16)] transition-opacity duration-300 ${
+              isModalVisible ? "opacity-100" : "opacity-0"
+            }`}
+          >
             <div className="flex items-start justify-between px-4 pb-4 pt-4 md:px-8 md:pt-6">
               <h2 className="text-[24px] leading-none text-black md:text-[32px]">EVENT</h2>
               <button
                 type="button"
-                onClick={() => setIsModalOpen(false)}
+                onClick={closeModal}
                 aria-label="Close event modal"
                 className="text-[34px] leading-none text-zinc-700 transition-colors hover:text-black"
               >
-                ×
+                &times;
               </button>
             </div>
 
@@ -166,3 +213,4 @@ export function EventsSection({
     </>
   );
 }
+

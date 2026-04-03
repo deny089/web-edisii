@@ -42,7 +42,7 @@ export function SiteHeader() {
             className="h-auto w-[132px] md:w-[172px]"
           />
         </Link>
-        <nav className="flex w-full items-center gap-5 overflow-x-auto pb-1 md:w-auto md:gap-8 md:overflow-visible md:pb-0">
+        <nav className="flex w-full items-center gap-5 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:w-auto md:gap-8 md:overflow-visible md:pb-0">
           {navItems.map((item) => {
             const isActive = pathname === "/" && hash === item.hash;
 

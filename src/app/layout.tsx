@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={cn("font-sans", crimsonText.variable)}>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="overflow-x-hidden font-sans antialiased">{children}</body>
     </html>
   );
 }

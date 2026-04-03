@@ -1,4 +1,4 @@
-"use client";
+ï»¿"use client";
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -37,6 +37,7 @@ export function OfficeSection({
       imageAlt: "EDISII studio collaboration",
     },
   ];
+
   const [activeSlide, setActiveSlide] = useState(0);
 
   useEffect(() => {
@@ -80,7 +81,7 @@ export function OfficeSection({
                       <p>{secondaryDescription}</p>
                     </div>
                     <p className="mt-5 text-[11px] uppercase tracking-[0.16em] text-stone-500 sm:mt-6 sm:text-[12px] sm:tracking-[0.18em]">
-                      {eyebrow} · {siteSettings.officeAddress}
+                      {eyebrow} - {siteSettings.officeAddress}
                     </p>
                   </FrostPanel>
                 </div>
