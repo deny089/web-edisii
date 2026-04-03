@@ -31,7 +31,7 @@ export const homepageSections = {
     secondaryDescription:
       "Each certified print represents not only a beautiful artwork, but a shared belief in the value of collaboration and preservation of artistic legacy.\n\nWe believe the future of art collecting extends beyond traditional paintings. Art is evolving, and prints represent a new form of ownership, one that is just as meaningful, collectible, and enduring.",
     ctaLabel: "OUR CATALOGUE",
-    ctaHref: "/catalogue",
+    ctaHref: "/#certificate",
     images: [
       {
         url: "/assets/collab-image-1.png",
@@ -87,30 +87,6 @@ export const homepageSections = {
     imageAlt: "Office interior",
   },
   };
-
-export const catalogueItems = [
-  {
-    title: "Echoes of Stone",
-    artistName: "Studio Example",
-    editionNumber: "Edition 01/25",
-    imageUrl:
-      "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=1974&auto=format&fit=crop",
-  },
-  {
-    title: "Quiet Surface",
-    artistName: "Studio Example",
-    editionNumber: "Edition 02/25",
-    imageUrl:
-      "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?q=80&w=1974&auto=format&fit=crop",
-  },
-  {
-    title: "Blue Field Notes",
-    artistName: "Studio Example",
-    editionNumber: "Edition 03/25",
-    imageUrl:
-      "https://images.unsplash.com/photo-1578301979108-0d6778d0b914?q=80&w=1974&auto=format&fit=crop",
-  },
-];
 
 export const eventItems = [
   {
