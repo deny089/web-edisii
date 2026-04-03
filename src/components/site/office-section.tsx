@@ -56,8 +56,8 @@ export function OfficeSection({
             {slides.map((slide, index) => (
               <div
                 key={slide.id}
-                className="absolute inset-0 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                style={{ transform: `translateX(${(index - activeSlide) * 100}%)` }}
+                className="absolute inset-0 transition-transform duration-700"
+                style={{ transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)", transform: `translateX(${(index - activeSlide) * 100}%)` }}
               >
                 <Image
                   src={slide.imageUrl}
