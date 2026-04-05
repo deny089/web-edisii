@@ -1,6 +1,6 @@
-﻿"use client";
+"use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Modal } from "@/components/ui/modal";
 
@@ -76,6 +76,7 @@ export function ArtworkCrud() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [deletingItem, setDeletingItem] = useState<ArtworkItem | null>(null);
   const [form, setForm] = useState<FormState>(emptyForm);
+  const formPanelRef = useRef<HTMLDivElement | null>(null);
 
   const isEditing = Boolean(editingId);
 
@@ -89,6 +90,19 @@ export function ArtworkCrud() {
   const resetForm = () => {
     setEditingId(null);
     setForm(emptyForm);
+  };
+
+  const scrollToForm = () => {
+    if (typeof window === "undefined" || window.innerWidth >= 768) {
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      formPanelRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
   };
 
   const handleChange = (field: keyof FormState, value: string) => {
@@ -177,7 +191,10 @@ export function ArtworkCrud() {
             </div>
             <button
               type="button"
-              onClick={resetForm}
+              onClick={() => {
+                resetForm();
+                scrollToForm();
+              }}
               className="inline-flex min-h-10 w-full items-center justify-center rounded-none border border-slate-300 bg-white px-4 py-2 text-[13px] font-medium text-slate-700 transition-colors hover:bg-slate-50 sm:w-auto"
             >
               New Entry
@@ -237,7 +254,7 @@ export function ArtworkCrud() {
           </div>
         </div>
 
-        <div className="rounded-none border border-slate-200 bg-white p-4 sm:p-5">
+        <div ref={formPanelRef} className="rounded-none border border-slate-200 bg-white p-4 sm:p-5">
           <div className="border-b border-slate-200 pb-4">
             <p className="text-[11px] uppercase tracking-[0.16em] text-slate-500">Form</p>
             <h3 className="mt-2 text-[22px] font-semibold leading-none text-slate-950">
@@ -336,27 +353,27 @@ export function ArtworkCrud() {
           containerClassName="overflow-y-auto"
           contentClassName="w-full max-w-[380px] rounded-none border border-slate-200 bg-white p-5 shadow-[0_20px_60px_rgba(15,23,42,0.2)] sm:p-6"
         >
-            <p className="text-[12px] uppercase tracking-[0.16em] text-slate-500">Delete Artwork</p>
-            <h3 className="mt-3 text-[24px] font-semibold leading-none text-slate-950">Remove this item?</h3>
-            <p className="mt-4 text-[14px] leading-relaxed text-slate-600">
-              You are about to delete <span className="font-medium text-slate-900">{deletingItem.title}</span>. This action cannot be undone in this demo state.
-            </p>
-            <div className="mt-6 grid gap-3 sm:flex sm:flex-wrap">
-              <button
-                type="button"
-                onClick={confirmDelete}
-                className="inline-flex min-h-11 w-full items-center justify-center rounded-none bg-rose-600 px-5 py-3 text-[13px] font-medium text-white transition-colors hover:bg-rose-700 sm:w-auto"
-              >
-                Yes, Delete
-              </button>
-              <button
-                type="button"
-                onClick={() => setDeletingItem(null)}
-                className="inline-flex min-h-11 w-full items-center justify-center rounded-none border border-slate-300 bg-white px-5 py-3 text-[13px] font-medium text-slate-700 transition-colors hover:bg-slate-50 sm:w-auto"
-              >
-                Cancel
-              </button>
-            </div>
+          <p className="text-[12px] uppercase tracking-[0.16em] text-slate-500">Delete Artwork</p>
+          <h3 className="mt-3 text-[24px] font-semibold leading-none text-slate-950">Remove this item?</h3>
+          <p className="mt-4 text-[14px] leading-relaxed text-slate-600">
+            You are about to delete <span className="font-medium text-slate-900">{deletingItem.title}</span>. This action cannot be undone in this demo state.
+          </p>
+          <div className="mt-6 grid gap-3 sm:flex sm:flex-wrap">
+            <button
+              type="button"
+              onClick={confirmDelete}
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-none bg-rose-600 px-5 py-3 text-[13px] font-medium text-white transition-colors hover:bg-rose-700 sm:w-auto"
+            >
+              Yes, Delete
+            </button>
+            <button
+              type="button"
+              onClick={() => setDeletingItem(null)}
+              className="inline-flex min-h-11 w-full items-center justify-center rounded-none border border-slate-300 bg-white px-5 py-3 text-[13px] font-medium text-slate-700 transition-colors hover:bg-slate-50 sm:w-auto"
+            >
+              Cancel
+            </button>
+          </div>
         </Modal>
       ) : null}
     </div>
