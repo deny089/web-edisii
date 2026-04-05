@@ -14,6 +14,21 @@ type OfficeSectionProps = {
   imageAlt: string;
 };
 
+const staticSlides = [
+  {
+    id: 1,
+    align: "left" as const,
+    imageUrl: "/assets/event-image.png",
+    imageAlt: "EDISII gallery space",
+  },
+  {
+    id: 2,
+    align: "right" as const,
+    imageUrl: "/assets/collab-image-1.png",
+    imageAlt: "EDISII studio collaboration",
+  },
+];
+
 export function OfficeSection({
   eyebrow,
   title,
@@ -22,21 +37,7 @@ export function OfficeSection({
   imageUrl,
   imageAlt,
 }: OfficeSectionProps) {
-  const slides = [
-    { id: 0, align: "right" as const, imageUrl, imageAlt },
-    {
-      id: 1,
-      align: "left" as const,
-      imageUrl: "/assets/event-image.png",
-      imageAlt: "EDISII gallery space",
-    },
-    {
-      id: 2,
-      align: "right" as const,
-      imageUrl: "/assets/collab-image-1.png",
-      imageAlt: "EDISII studio collaboration",
-    },
-  ];
+  const slides = [{ id: 0, align: "right" as const, imageUrl, imageAlt }, ...staticSlides];
 
   const [activeSlide, setActiveSlide] = useState(0);
 

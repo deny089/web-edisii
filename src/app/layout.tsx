@@ -1,13 +1,29 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
-import { Crimson_Text } from "next/font/google";
+import localFont from "next/font/local";
 import { cn } from "@/lib/utils";
 
-const crimsonText = Crimson_Text({
-  subsets: ["latin"],
+const crimsonText = localFont({
+  src: [
+    {
+      path: "../fonts/CrimsonText-Regular-latin.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../fonts/CrimsonText-Semibold-latin.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../fonts/CrimsonText-Bold-latin.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
   variable: "--font-crimson",
-  weight: ["400", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {

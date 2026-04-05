@@ -86,31 +86,4 @@ export const homepageSections = {
     imageUrl: "/assets/office-image.png",
     imageAlt: "Office interior",
   },
-  };
-
-export const eventItems = [
-  {
-    title: "Collector Preview Night",
-    description:
-      "A quiet preview session for collectors and partners featuring a new edition release and certificate presentation.",
-    date: "12 October 2026",
-    imageUrl:
-      "https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=80&w=2070&auto=format&fit=crop",
-  },
-  {
-    title: "Artist Talk: Print as Legacy",
-    description:
-      "Conversation with artists and publishers on how editions expand access while preserving meaning and authorship.",
-    date: "06 November 2026",
-    imageUrl:
-      "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2070&auto=format&fit=crop",
-  },
-  {
-    title: "Studio Visit & Proof Review",
-    description:
-      "A behind-the-scenes session that shares paper selection, proofing, and finishing details with invited guests.",
-    date: "01 December 2026",
-    imageUrl:
-      "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=1965&auto=format&fit=crop",
-  },
-];
+};

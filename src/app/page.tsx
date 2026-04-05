@@ -1,4 +1,4 @@
-import { homepageSections, eventItems } from "@/content/site";
+import { homepageSections } from "@/content/site";
 import { PublicShell } from "@/components/site/public-shell";
 import { HeroSection } from "@/components/site/hero-section";
 import { CollaborationSection } from "@/components/site/collaboration-section";
@@ -12,7 +12,7 @@ export default function HomePage() {
       <div className="flex w-full flex-col">
         <HeroSection {...homepageSections.about} />
         <CollaborationSection {...homepageSections.collaboration} />
-        <EventsSection {...homepageSections.event} events={eventItems} />
+        <EventsSection {...homepageSections.event} />
         <CertificateSection {...homepageSections.certificate} />
         <OfficeSection {...homepageSections.office} />
       </div>

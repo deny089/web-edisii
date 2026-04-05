@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
+import { Modal } from "@/components/ui/modal";
 
 type ArtworkItem = {
   id: string;
@@ -153,22 +154,22 @@ export function ArtworkCrud() {
   return (
     <div className="space-y-6">
       <div className="grid gap-2 min-[360px]:grid-cols-3 sm:flex sm:flex-wrap sm:gap-3">
-        <article className="min-w-0 rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 sm:min-w-[140px] sm:px-4">
+        <article className="min-w-0 rounded-none border border-slate-200 bg-slate-50 px-3 py-3 sm:min-w-[140px] sm:px-4">
           <p className="text-[10px] uppercase tracking-[0.14em] text-slate-500">Total Items</p>
           <p className="mt-2 text-[22px] font-semibold leading-none text-slate-950 sm:text-[24px]">{summary.total}</p>
         </article>
-        <article className="min-w-0 rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 sm:min-w-[140px] sm:px-4">
+        <article className="min-w-0 rounded-none border border-slate-200 bg-slate-50 px-3 py-3 sm:min-w-[140px] sm:px-4">
           <p className="text-[10px] uppercase tracking-[0.14em] text-slate-500">Published</p>
           <p className="mt-2 text-[22px] font-semibold leading-none text-slate-950 sm:text-[24px]">{summary.published}</p>
         </article>
-        <article className="min-w-0 rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 sm:min-w-[140px] sm:px-4">
+        <article className="min-w-0 rounded-none border border-slate-200 bg-slate-50 px-3 py-3 sm:min-w-[140px] sm:px-4">
           <p className="text-[10px] uppercase tracking-[0.14em] text-slate-500">Drafts</p>
           <p className="mt-2 text-[22px] font-semibold leading-none text-slate-950 sm:text-[24px]">{summary.drafts}</p>
         </article>
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_420px]">
-        <div className="rounded-xl border border-slate-200 bg-white">
+        <div className="rounded-none border border-slate-200 bg-white">
           <div className="flex flex-col items-start gap-4 border-b border-slate-200 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
             <div>
               <p className="text-[11px] uppercase tracking-[0.16em] text-slate-500">List</p>
@@ -177,7 +178,7 @@ export function ArtworkCrud() {
             <button
               type="button"
               onClick={resetForm}
-              className="inline-flex min-h-10 w-full items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2 text-[13px] font-medium text-slate-700 transition-colors hover:bg-slate-50 sm:w-auto"
+              className="inline-flex min-h-10 w-full items-center justify-center rounded-none border border-slate-300 bg-white px-4 py-2 text-[13px] font-medium text-slate-700 transition-colors hover:bg-slate-50 sm:w-auto"
             >
               New Entry
             </button>
@@ -188,7 +189,7 @@ export function ArtworkCrud() {
               <article
                 key={item.id}
                 className={cn(
-                  "rounded-lg border px-3 py-3 transition-colors",
+                  "rounded-none border px-3 py-3 transition-colors",
                   editingId === item.id ? "border-slate-900 bg-slate-50" : "border-slate-200 bg-white"
                 )}
               >
@@ -198,7 +199,7 @@ export function ArtworkCrud() {
                       <h4 className="text-[18px] font-semibold leading-none text-slate-950">{item.title}</h4>
                       <span
                         className={cn(
-                          "rounded-full px-2.5 py-1 text-[10px] uppercase tracking-[0.1em]",
+                          "rounded-none px-2.5 py-1 text-[10px] uppercase tracking-[0.1em]",
                           item.status === "Published"
                             ? "bg-emerald-100 text-emerald-700"
                             : "bg-amber-100 text-amber-700"
@@ -218,14 +219,14 @@ export function ArtworkCrud() {
                     <button
                       type="button"
                       onClick={() => handleEdit(item)}
-                      className="inline-flex min-h-9 items-center justify-center rounded-md border border-slate-300 bg-white px-3 py-2 text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-50"
+                      className="inline-flex min-h-9 items-center justify-center rounded-none border border-slate-300 bg-white px-3 py-2 text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-50"
                     >
                       Edit
                     </button>
                     <button
                       type="button"
                       onClick={() => setDeletingItem(item)}
-                      className="inline-flex min-h-9 items-center justify-center rounded-md border border-rose-200 bg-rose-50 px-3 py-2 text-[12px] font-medium text-rose-600 transition-colors hover:bg-rose-100"
+                      className="inline-flex min-h-9 items-center justify-center rounded-none border border-rose-200 bg-rose-50 px-3 py-2 text-[12px] font-medium text-rose-600 transition-colors hover:bg-rose-100"
                     >
                       Delete
                     </button>
@@ -236,7 +237,7 @@ export function ArtworkCrud() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-slate-200 bg-white p-4 sm:p-5">
+        <div className="rounded-none border border-slate-200 bg-white p-4 sm:p-5">
           <div className="border-b border-slate-200 pb-4">
             <p className="text-[11px] uppercase tracking-[0.16em] text-slate-500">Form</p>
             <h3 className="mt-2 text-[22px] font-semibold leading-none text-slate-950">
@@ -250,7 +251,7 @@ export function ArtworkCrud() {
               <input
                 value={form.title}
                 onChange={(event) => handleChange("title", event.target.value)}
-                className="min-h-11 rounded-lg border border-slate-300 bg-white px-4 text-[14px] outline-none transition-colors focus:border-slate-900"
+                className="min-h-11 rounded-none border border-slate-300 bg-white px-4 text-[14px] outline-none transition-colors focus:border-slate-900"
                 placeholder="Artwork title"
               />
             </label>
@@ -260,7 +261,7 @@ export function ArtworkCrud() {
               <input
                 value={form.artist}
                 onChange={(event) => handleChange("artist", event.target.value)}
-                className="min-h-11 rounded-lg border border-slate-300 bg-white px-4 text-[14px] outline-none transition-colors focus:border-slate-900"
+                className="min-h-11 rounded-none border border-slate-300 bg-white px-4 text-[14px] outline-none transition-colors focus:border-slate-900"
                 placeholder="Artist name"
               />
             </label>
@@ -271,7 +272,7 @@ export function ArtworkCrud() {
                 <input
                   value={form.edition}
                   onChange={(event) => handleChange("edition", event.target.value)}
-                  className="min-h-11 rounded-lg border border-slate-300 bg-white px-4 text-[14px] outline-none transition-colors focus:border-slate-900"
+                  className="min-h-11 rounded-none border border-slate-300 bg-white px-4 text-[14px] outline-none transition-colors focus:border-slate-900"
                   placeholder="1/7"
                 />
               </label>
@@ -281,7 +282,7 @@ export function ArtworkCrud() {
                 <input
                   value={form.year}
                   onChange={(event) => handleChange("year", event.target.value)}
-                  className="min-h-11 rounded-lg border border-slate-300 bg-white px-4 text-[14px] outline-none transition-colors focus:border-slate-900"
+                  className="min-h-11 rounded-none border border-slate-300 bg-white px-4 text-[14px] outline-none transition-colors focus:border-slate-900"
                   placeholder="2026"
                 />
               </label>
@@ -292,7 +293,7 @@ export function ArtworkCrud() {
               <input
                 value={form.url}
                 onChange={(event) => handleChange("url", event.target.value)}
-                className="min-h-11 rounded-lg border border-slate-300 bg-white px-4 text-[14px] outline-none transition-colors focus:border-slate-900"
+                className="min-h-11 rounded-none border border-slate-300 bg-white px-4 text-[14px] outline-none transition-colors focus:border-slate-900"
                 placeholder="/cert-art?code=12asd12s"
               />
             </label>
@@ -302,7 +303,7 @@ export function ArtworkCrud() {
               <select
                 value={form.status}
                 onChange={(event) => handleChange("status", event.target.value as ArtworkItem["status"])}
-                className="min-h-11 rounded-lg border border-slate-300 bg-white px-4 text-[14px] outline-none transition-colors focus:border-slate-900"
+                className="min-h-11 rounded-none border border-slate-300 bg-white px-4 text-[14px] outline-none transition-colors focus:border-slate-900"
               >
                 <option value="Draft">Draft</option>
                 <option value="Published">Published</option>
@@ -312,14 +313,14 @@ export function ArtworkCrud() {
             <div className="flex flex-wrap gap-3 pt-2">
               <button
                 type="submit"
-                className="inline-flex min-h-11 items-center justify-center rounded-lg bg-slate-900 px-5 py-3 text-[13px] font-medium text-white transition-colors hover:bg-slate-800"
+                className="inline-flex min-h-11 items-center justify-center rounded-none bg-slate-900 px-5 py-3 text-[13px] font-medium text-white transition-colors hover:bg-slate-800"
               >
                 {isEditing ? "Save Changes" : "Create Item"}
               </button>
               <button
                 type="button"
                 onClick={resetForm}
-                className="inline-flex min-h-11 items-center justify-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-[13px] font-medium text-slate-700 transition-colors hover:bg-slate-50"
+                className="inline-flex min-h-11 items-center justify-center rounded-none border border-slate-300 bg-white px-5 py-3 text-[13px] font-medium text-slate-700 transition-colors hover:bg-slate-50"
               >
                 Reset
               </button>
@@ -329,8 +330,12 @@ export function ArtworkCrud() {
       </div>
 
       {deletingItem ? (
-        <div className="fixed inset-0 z-[120] flex items-center justify-center overflow-y-auto bg-slate-950/40 p-4">
-          <div className="w-full max-w-[380px] rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_20px_60px_rgba(15,23,42,0.2)] sm:p-6">
+        <Modal
+          onClose={() => setDeletingItem(null)}
+          overlayClassName="bg-slate-950/40"
+          containerClassName="overflow-y-auto"
+          contentClassName="w-full max-w-[380px] rounded-none border border-slate-200 bg-white p-5 shadow-[0_20px_60px_rgba(15,23,42,0.2)] sm:p-6"
+        >
             <p className="text-[12px] uppercase tracking-[0.16em] text-slate-500">Delete Artwork</p>
             <h3 className="mt-3 text-[24px] font-semibold leading-none text-slate-950">Remove this item?</h3>
             <p className="mt-4 text-[14px] leading-relaxed text-slate-600">
@@ -340,20 +345,19 @@ export function ArtworkCrud() {
               <button
                 type="button"
                 onClick={confirmDelete}
-                className="inline-flex min-h-11 w-full items-center justify-center rounded-lg bg-rose-600 px-5 py-3 text-[13px] font-medium text-white transition-colors hover:bg-rose-700 sm:w-auto"
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-none bg-rose-600 px-5 py-3 text-[13px] font-medium text-white transition-colors hover:bg-rose-700 sm:w-auto"
               >
                 Yes, Delete
               </button>
               <button
                 type="button"
                 onClick={() => setDeletingItem(null)}
-                className="inline-flex min-h-11 w-full items-center justify-center rounded-lg border border-slate-300 bg-white px-5 py-3 text-[13px] font-medium text-slate-700 transition-colors hover:bg-slate-50 sm:w-auto"
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-none border border-slate-300 bg-white px-5 py-3 text-[13px] font-medium text-slate-700 transition-colors hover:bg-slate-50 sm:w-auto"
               >
                 Cancel
               </button>
             </div>
-          </div>
-        </div>
+        </Modal>
       ) : null}
     </div>
   );
