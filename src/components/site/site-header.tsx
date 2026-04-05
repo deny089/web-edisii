@@ -19,6 +19,28 @@ export function SiteHeader() {
   const [hash, setHash] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const scrollToSection = (targetHash: string) => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const target = document.querySelector<HTMLElement>(targetHash);
+    if (!target) {
+      return;
+    }
+
+    const header = document.getElementById("site-header");
+    const headerOffset = header ? header.getBoundingClientRect().height : 96;
+    const targetTop = target.getBoundingClientRect().top + window.scrollY;
+
+    window.history.replaceState(null, "", `/${targetHash}`);
+    setHash(targetHash);
+    window.scrollTo({
+      top: Math.max(targetTop - headerOffset, 0),
+      behavior: "smooth",
+    });
+  };
+
   useEffect(() => {
     const syncHash = () => {
       setHash(window.location.hash || "#about");
@@ -35,9 +57,9 @@ export function SiteHeader() {
   }, [pathname, hash]);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-black/5 bg-background/85 backdrop-blur-md">
+    <header id="site-header" className="sticky top-0 z-50 w-full border-b border-black/5 bg-background/85 backdrop-blur-md">
       <div className="container mx-auto px-6 py-4 md:h-24 md:px-12 md:py-0">
-        <div className="flex items-center justify-between gap-4 md:h-full md:justify-start">
+        <div className="flex items-center justify-between gap-4 md:h-full">
           <Link href="/" className="flex items-center">
             <Image
               src="/assets/edisii-logo.png"
@@ -76,27 +98,34 @@ export function SiteHeader() {
               />
             </span>
           </button>
+
+          <nav className="hidden h-full items-center gap-8 md:ml-auto md:flex md:justify-end">
+            {navItems.map((item) => {
+              const isActive = pathname === "/" && hash === item.hash;
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={(event) => {
+                    if (pathname === "/") {
+                      event.preventDefault();
+                      scrollToSection(item.hash);
+                    } else {
+                      setHash(item.hash);
+                    }
+                  }}
+                  className={cn(
+                    "shrink-0 whitespace-nowrap text-[16px] uppercase transition-colors hover:text-zinc-500",
+                    isActive ? "font-bold text-zinc-950" : "font-normal text-zinc-700"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
         </div>
-
-        <nav className="hidden h-full items-center gap-8 md:flex md:justify-end">
-          {navItems.map((item) => {
-            const isActive = pathname === "/" && hash === item.hash;
-
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setHash(item.hash)}
-                className={cn(
-                  "shrink-0 whitespace-nowrap text-[16px] uppercase transition-colors hover:text-zinc-500",
-                  isActive ? "font-bold text-zinc-950" : "font-normal text-zinc-700"
-                )}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
 
         <div
           className={cn(
@@ -113,9 +142,14 @@ export function SiteHeader() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    onClick={() => {
-                      setHash(item.hash);
+                    onClick={(event) => {
                       setIsMenuOpen(false);
+                      if (pathname === "/") {
+                        event.preventDefault();
+                        scrollToSection(item.hash);
+                        return;
+                      }
+                      setHash(item.hash);
                     }}
                     className={cn(
                       "whitespace-nowrap text-[14px] uppercase transition-colors hover:text-zinc-500",
