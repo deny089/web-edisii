@@ -1,6 +1,6 @@
-﻿"use client";
+"use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { siteSettings } from "@/content/site";
 import { FrostPanel } from "@/components/site/frost-panel";
@@ -14,16 +14,23 @@ type OfficeSectionProps = {
   imageAlt: string;
 };
 
-const staticSlides = [
+type Slide = {
+  id: number;
+  align: "left" | "right";
+  imageUrl: string;
+  imageAlt: string;
+};
+
+const staticSlides: Slide[] = [
   {
     id: 1,
-    align: "left" as const,
+    align: "left",
     imageUrl: "/assets/event-image.png",
     imageAlt: "EDISII gallery space",
   },
   {
     id: 2,
-    align: "right" as const,
+    align: "right",
     imageUrl: "/assets/collab-image-1.png",
     imageAlt: "EDISII studio collaboration",
   },
@@ -37,36 +44,122 @@ export function OfficeSection({
   imageUrl,
   imageAlt,
 }: OfficeSectionProps) {
-  const slides = [{ id: 0, align: "right" as const, imageUrl, imageAlt }, ...staticSlides];
+  const slides: Slide[] = [{ id: 0, align: "right", imageUrl, imageAlt }, ...staticSlides];
+  const loopedSlides = [slides[slides.length - 1], ...slides, slides[0]];
 
-  const [activeSlide, setActiveSlide] = useState(0);
+  const [activeSlide, setActiveSlide] = useState(1);
+  const [isTransitionEnabled, setIsTransitionEnabled] = useState(true);
+  const touchStartX = useRef<number | null>(null);
+  const touchDeltaX = useRef(0);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setActiveSlide((current) => (current + 1) % slides.length);
+      setIsTransitionEnabled(true);
+      setActiveSlide((current) => current + 1);
     }, 5000);
 
     return () => window.clearInterval(timer);
-  }, [slides.length]);
+  }, []);
+
+  const currentSlideIndex =
+    activeSlide === 0 ? slides.length - 1 : activeSlide === slides.length + 1 ? 0 : activeSlide - 1;
+
+  const goToSlide = (index: number) => {
+    setIsTransitionEnabled(true);
+    setActiveSlide(index + 1);
+  };
+
+  const goToNextSlide = () => {
+    setIsTransitionEnabled(true);
+    setActiveSlide((current) => current + 1);
+  };
+
+  const goToPreviousSlide = () => {
+    setIsTransitionEnabled(true);
+    setActiveSlide((current) => current - 1);
+  };
+
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = event.touches[0]?.clientX ?? null;
+    touchDeltaX.current = 0;
+  };
+
+  const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (touchStartX.current === null) {
+      return;
+    }
+
+    touchDeltaX.current = event.touches[0].clientX - touchStartX.current;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current === null) {
+      return;
+    }
+
+    if (Math.abs(touchDeltaX.current) > 48) {
+      if (touchDeltaX.current < 0) {
+        goToNextSlide();
+      } else {
+        goToPreviousSlide();
+      }
+    }
+
+    touchStartX.current = null;
+    touchDeltaX.current = 0;
+  };
+
+  const handleTransitionEnd = () => {
+    if (activeSlide === slides.length + 1) {
+      setIsTransitionEnabled(false);
+      setActiveSlide(1);
+      return;
+    }
+
+    if (activeSlide === 0) {
+      setIsTransitionEnabled(false);
+      setActiveSlide(slides.length);
+    }
+  };
+
+  useEffect(() => {
+    if (!isTransitionEnabled) {
+      const frame = window.requestAnimationFrame(() => {
+        setIsTransitionEnabled(true);
+      });
+
+      return () => window.cancelAnimationFrame(frame);
+    }
+  }, [isTransitionEnabled]);
 
   return (
-    <section id="office" className="scroll-mt-24 px-4 pb-8 pt-8 md:px-0 md:pb-14">
-      <div className="relative mx-auto w-full overflow-hidden bg-stone-950 shadow-[0_30px_100px_rgba(44,30,17,0.18)]">
+    <section id="office" className="scroll-mt-24 pb-8 pt-8 md:pb-14">
+      <div
+        className="relative w-full overflow-hidden bg-stone-950 shadow-[0_30px_100px_rgba(44,30,17,0.18)] touch-pan-y"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         <div className="relative aspect-[4/5] sm:aspect-[16/12] md:aspect-[21/8]">
-          <div className="absolute inset-0 overflow-hidden">
-            {slides.map((slide, index) => (
-              <div
-                key={slide.id}
-                className="absolute inset-0 transition-transform duration-700"
-                style={{ transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)", transform: `translateX(${(index - activeSlide) * 100}%)` }}
-              >
+          <div
+            className="absolute inset-0 flex"
+            onTransitionEnd={handleTransitionEnd}
+            style={{
+              transform: `translateX(-${activeSlide * 100}%)`,
+              transitionDuration: isTransitionEnabled ? "700ms" : "0ms",
+              transitionProperty: "transform",
+              transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+            }}
+          >
+            {loopedSlides.map((slide, index) => (
+              <div key={`${slide.id}-${index}`} className="relative h-full w-full shrink-0 overflow-hidden">
                 <Image
                   src={slide.imageUrl}
                   alt={slide.imageAlt}
                   fill
                   sizes="100vw"
                   className="object-cover"
-                  priority={index === 0}
+                  priority={index <= 1}
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.12),rgba(0,0,0,0.08))]" />
                 <div
@@ -95,9 +188,9 @@ export function OfficeSection({
                 key={slide.id}
                 type="button"
                 aria-label={`Go to office slide ${index + 1}`}
-                onClick={() => setActiveSlide(index)}
+                onClick={() => goToSlide(index)}
                 className={`h-2.5 w-2.5 rounded-full transition ${
-                  index === activeSlide ? "bg-white" : "bg-white/45"
+                  index === currentSlideIndex ? "bg-white" : "bg-white/45"
                 }`}
               />
             ))}
