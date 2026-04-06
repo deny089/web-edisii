@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { siteEditorialButtonClassName } from "@/components/site/site-link-button";
 
 export default function CertArtPage() {
   return (
@@ -17,7 +18,7 @@ export default function CertArtPage() {
           <div className="absolute inset-0 bg-black/34" />
           <div className="absolute inset-0 flex items-center justify-center px-10">
             <Image
-              src="/assets/edisii-footer.png"
+              src="/assets/edisii-footer.svg"
               alt="EDISII Art Print Publisher"
               width={218}
               height={70}
@@ -34,7 +35,7 @@ export default function CertArtPage() {
             </p>
           </div>
 
-          <div className="flex flex-1 flex-col justify-between pt-7">
+          <div className="flex flex-1 flex-col pt-7">
             <div className="mx-auto max-w-[214px] text-center">
               <p className="text-[12px] leading-[1.46] text-zinc-500">
                 This code serves as a verification mark confirming that the art is a genuine and
@@ -42,30 +43,32 @@ export default function CertArtPage() {
               </p>
             </div>
 
-            <div className="mx-auto w-full max-w-[182px] pt-12">
-              <Link
-                href="/"
-                className="inline-flex min-h-10 w-full items-center justify-center whitespace-nowrap bg-[#d9d9d7] px-5 py-2.5 text-center text-[14px] font-semibold uppercase tracking-[0.12em] text-zinc-900 transition-colors hover:bg-[#cececc]"
-              >
-                Visit Our Website
-              </Link>
-            </div>
+            <div className="mt-auto pt-10">
+              <div className="mx-auto flex justify-center">
+                <Link
+                  href="/"
+                  className={siteEditorialButtonClassName}
+                >
+                  Visit Our Website
+                </Link>
+              </div>
 
-            <div className="mt-9 grid grid-cols-3 items-center gap-2 text-center text-[12px] text-zinc-900">
-              <a href="mailto:info@edisii.com" className="truncate">
-                info@edisii.com
-              </a>
-              <a href="tel:+6283832288860" className="truncate">
-                +62 833 322 8860
-              </a>
-              <a
-                href="https://instagram.com/the_edisii"
-                target="_blank"
-                rel="noreferrer"
-                className="truncate"
-              >
-                @the_edisii
-              </a>
+              <div className="mt-9 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-center text-[12px] text-zinc-900">
+                <a href="mailto:info@edisii.com" className="truncate">
+                  info@edisii.com
+                </a>
+                <a href="tel:+6283832288860" className="truncate">
+                  +62 833 322 8860
+                </a>
+                <a
+                  href="https://instagram.com/the_edisii"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="truncate"
+                >
+                  @the_edisii
+                </a>
+              </div>
             </div>
           </div>
         </section>

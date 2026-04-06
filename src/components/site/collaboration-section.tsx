@@ -43,7 +43,7 @@ export function CollaborationSection({
                     <p key={paragraph}>{paragraph}</p>
                   ))}
                 </div>
-                <SiteLinkButton href={ctaHref} className="mt-10 min-w-[220px] self-end md:min-w-[250px]">
+                <SiteLinkButton href={ctaHref} download className="mt-10 self-end">
                   {ctaLabel}
                 </SiteLinkButton>
               </div>

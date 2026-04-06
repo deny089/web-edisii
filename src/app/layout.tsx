@@ -29,6 +29,11 @@ const crimsonText = localFont({
 export const metadata: Metadata = {
   title: "EDISII",
   description: "Art print publisher company profile website.",
+  icons: {
+    icon: "/assets/favicon-edisii.jpg.jpeg",
+    shortcut: "/assets/favicon-edisii.jpg.jpeg",
+    apple: "/assets/favicon-edisii.jpg.jpeg",
+  },
 };
 
 export default function RootLayout({

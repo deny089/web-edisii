@@ -14,11 +14,11 @@ export function PublicShell({ children }: PublicShellProps) {
 
       <main className="flex-1">{children}</main>
 
-      <footer className="bg-[#D8D6D6] py-10 md:py-10">
+      <footer className="bg-[#D8D6D6] py-8 md:py-8">
         <div className="mx-auto flex w-full max-w-[1440px] flex-col justify-between gap-8 px-6 md:flex-row md:items-start md:px-12">
           <div className="flex flex-col items-start">
             <Image
-              src="/assets/edisii-footer.png"
+              src="/assets/edisii-footer.svg"
               alt={`${siteSettings.companyName} logo`}
               width={154}
               height={40}
@@ -32,26 +32,26 @@ export function PublicShell({ children }: PublicShellProps) {
             </p>
           </div>
 
-          <div className="flex flex-col gap-1.5 text-[14px] leading-[1.25] text-zinc-900 md:pt-0.5">
-            <div className="flex items-start gap-2">
+          <div className="flex flex-col gap-1 text-[14px] leading-[1.2] text-zinc-900 md:pt-0.5">
+            <div className="flex items-start gap-2.5">
               <span className="w-3 text-[14px] text-zinc-500">E.</span>
-              <a href={`mailto:${siteSettings.contactEmail}`} className="hover:underline">
+              <a href={`mailto:${siteSettings.contactEmail}`} className="font-semibold hover:underline">
                 {siteSettings.contactEmail}
               </a>
             </div>
-            <div className="flex items-start gap-2">
-              <span className="w-3 text-[14px] text-zinc-500">T.</span>
-              <a href={`tel:${siteSettings.contactPhone}`} className="hover:underline">
+            <div className="flex items-start gap-2.5">
+              <span className="w-3 text-[14px] text-zinc-500">P.</span>
+              <a href={`tel:${siteSettings.contactPhone}`} className="font-semibold hover:underline">
                 {siteSettings.contactPhone}
               </a>
             </div>
-            <div className="flex items-start gap-2">
+            <div className="flex items-start gap-2.5">
               <span className="w-3 text-[14px] text-zinc-500">I.</span>
               <a
                 href={siteSettings.contactInstagramUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="hover:underline"
+                className="font-semibold hover:underline"
               >
                 {siteSettings.contactInstagram}
               </a>

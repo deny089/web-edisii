@@ -19,7 +19,7 @@ export function HeroSection({
   return (
     <section
       id="about"
-      className="relative flex h-[520px] w-full scroll-mt-24 items-end overflow-hidden bg-black text-white sm:h-[580px] md:h-[620px]"
+      className="relative flex h-[520px] w-full scroll-mt-24 items-end overflow-hidden bg-black text-white sm:h-[580px] md:h-[620px] lg:h-[620px]"
     >
       <div className="absolute inset-0 z-0 select-none">
         <Image
@@ -35,9 +35,9 @@ export function HeroSection({
         <div className="absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.76))]" />
       </div>
 
-      <div className="container relative z-10 mx-auto w-full px-6 pb-8 md:px-16 md:pb-12">
-        <div className="grid max-w-[1240px] grid-cols-1 gap-6 md:grid-cols-[320px_430px] md:items-start md:justify-start md:gap-24">
-          <div className="flex max-w-[340px] flex-col gap-5">
+      <div className="container relative z-10 mx-auto w-full px-6 pb-8 md:px-12 md:pb-12 lg:px-16">
+        <div className="grid max-w-[1240px] grid-cols-1 gap-6 md:max-w-[620px] md:gap-7 lg:max-w-[1240px] lg:grid-cols-[320px_430px] lg:items-start lg:justify-start lg:gap-24">
+          <div className="flex max-w-[340px] flex-col gap-5 md:max-w-[420px]">
             <h1 className="text-[16px] leading-[1.5] text-white">
               {title}
             </h1>
@@ -45,7 +45,7 @@ export function HeroSection({
               {description}
             </p>
           </div>
-          <div className="max-w-[430px]">
+          <div className="max-w-[430px] md:max-w-[560px]">
             <p className="text-[15px] leading-[1.65] text-white/96 md:text-[16px] md:leading-[1.75]">
               {secondaryDescription}
             </p>

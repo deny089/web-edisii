@@ -1,23 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { FrostPanel } from "@/components/site/frost-panel";
-
-const EventsModal = dynamic(
-  () => import("@/components/site/events-modal").then((module) => module.EventsModal),
-  { ssr: false }
-);
-
-const eventGallery = [
-  "/images/events/Rectangle%2023.png",
-  "/images/events/Rectangle%2024.png",
-  "/images/events/Rectangle%2025.png",
-  "/images/events/Rectangle%2027.png",
-  "/images/events/Rectangle%2028.png",
-  "/images/events/Rectangle%2029.png",
-];
+import { siteEditorialButtonClassName } from "@/components/site/site-link-button";
+import { eventModalTabs } from "@/content/events";
+import { EventsModal } from "@/components/site/events-modal";
 
 type EventsSectionProps = {
   title: string;
@@ -101,7 +89,7 @@ export function EventsSection({
       <section id="event" className="scroll-mt-24 bg-white">
         <div className="relative flex h-[470px] items-center overflow-hidden md:h-[560px]">
           <div className="absolute inset-0">
-            <Image src={imageUrl} alt={imageAlt} fill sizes="100vw" className="object-cover" />
+            <Image src={imageUrl} alt={imageAlt} fill sizes="100vw" className="object-cover object-left" />
             <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.02),rgba(255,255,255,0.04))]" />
           </div>
 
@@ -114,7 +102,7 @@ export function EventsSection({
               <button
                 type="button"
                 onClick={openModal}
-                className="mt-7 inline-flex min-h-11 w-full items-center justify-center border border-[#d0d0d0] bg-[#d9d9d7] px-6 py-3 text-[14px] tracking-[0.16em] uppercase text-black transition-colors hover:bg-[#cececc] sm:min-w-[230px] sm:w-auto sm:px-8 sm:text-[16px]"
+                className={`mt-7 ${siteEditorialButtonClassName}`}
               >
                 {ctaLabel}
               </button>
@@ -125,7 +113,7 @@ export function EventsSection({
 
       {isModalMounted ? (
         <EventsModal
-          eventGallery={eventGallery}
+          tabs={eventModalTabs}
           isVisible={isModalVisible}
           onClose={closeModal}
         />

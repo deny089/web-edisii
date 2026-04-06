@@ -92,7 +92,7 @@ export function AdminShell({
 
   return (
     <>
-      <header className="border-b border-slate-200 bg-white">
+      <header id="admin-header" className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex w-full max-w-[1440px] items-center justify-between gap-4 px-4 py-4 md:px-8 md:py-5">
           <div>
             <p className="text-[11px] uppercase tracking-[0.24em] text-slate-500">Admin Dashboard</p>
@@ -104,7 +104,7 @@ export function AdminShell({
             aria-label={isMobileMenuOpen ? "Close admin menu" : "Open admin menu"}
             aria-expanded={isMobileMenuOpen}
             onClick={() => setIsMobileMenuOpen((current) => !current)}
-            className="inline-flex h-10 w-10 items-center justify-center border border-slate-200 bg-white text-slate-950 lg:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center border border-slate-200 bg-white text-slate-950 md:hidden"
           >
             <span className="relative block h-4 w-5">
               <span
@@ -131,7 +131,7 @@ export function AdminShell({
 
         <div
           className={cn(
-            "grid overflow-hidden transition-[grid-template-rows,opacity,margin] duration-300 lg:hidden",
+            "grid overflow-hidden transition-[grid-template-rows,opacity,margin] duration-300 md:hidden",
             isMobileMenuOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
           )}
         >
@@ -164,8 +164,8 @@ export function AdminShell({
       </header>
 
       <main className="mx-auto w-full max-w-[1440px] px-4 py-4 md:px-8 md:py-8">
-        <div className="grid gap-6 lg:grid-cols-[250px_minmax(0,1fr)]">
-          <aside className="hidden flex-col bg-[#111827] p-4 text-white shadow-[0_16px_40px_rgba(15,23,42,0.16)] md:p-5 lg:flex lg:min-h-[calc(100vh-8.5rem)]">
+        <div className="grid gap-6 md:grid-cols-[250px_minmax(0,1fr)]">
+          <aside className="hidden flex-col bg-[#111827] p-4 text-white shadow-[0_16px_40px_rgba(15,23,42,0.16)] md:flex md:min-h-[calc(100vh-8.5rem)] md:p-5">
             <nav className="space-y-2">
               {menuItems.map((item) => (
                 <MenuButton key={item.id} item={item} isActive={item.id === activeMenu} />

@@ -12,12 +12,11 @@ export function CertificateSection({
   title,
   description,
   secondaryDescription,
-  images,
 }: CertificateSectionProps) {
   return (
-    <section id="certificate" className="scroll-mt-24 bg-white py-20 md:py-32">
-      <div className="mx-auto grid max-w-[1460px] grid-cols-1 items-start gap-12 px-6 md:grid-cols-[360px_minmax(0,760px)] md:justify-center md:gap-20 md:px-10">
-        <div className="max-w-[360px] space-y-6 md:max-w-[320px] md:space-y-8 md:pt-16">
+    <section id="certificate" className="scroll-mt-24 bg-white py-8 md:py-10">
+      <div className="mx-auto grid max-w-[1240px] grid-cols-1 items-center justify-center gap-12 px-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-24 md:px-10">
+        <div className="max-w-[520px] justify-self-center space-y-6 text-left md:max-w-[480px] md:space-y-8">
           <h2 className="text-[30px] font-semibold leading-none tracking-[-0.01em] text-stone-950 md:text-[32px]">
             {title}
           </h2>
@@ -26,26 +25,15 @@ export function CertificateSection({
             <p>{secondaryDescription}</p>
           </div>
         </div>
-        <div className="relative min-h-[290px] sm:min-h-[380px] md:min-h-[520px]">
-          <div className="relative ml-[2%] h-[250px] w-[56%] overflow-hidden bg-stone-200 sm:h-[340px] md:ml-[4%] md:h-[500px] md:w-[40%]">
+        <div className="mx-auto w-full max-w-[520px]">
+          <div className="relative aspect-[10/11] w-full overflow-hidden">
             <Image
-              src={images[0].url}
-              alt={images[0].alt}
+              src="/assets/certificate-img.png"
+              alt="Certificate artwork presentation"
               fill
-              sizes="(min-width: 768px) 24vw, 100vw"
-              className="object-cover object-center"
+              sizes="(min-width: 768px) 34vw, 100vw"
+              className="object-contain object-center"
             />
-          </div>
-          <div className="absolute left-[40%] top-[-18px] h-[250px] w-[56%] bg-white px-[8px] pt-[8px] sm:left-[42%] sm:top-[-24px] sm:h-[340px] sm:px-[10px] sm:pt-[10px] md:left-[41%] md:top-[-46px] md:h-[500px] md:w-[40%] md:px-[12px] md:pt-[12px]">
-            <div className="relative h-full w-full overflow-hidden bg-stone-200">
-              <Image
-                src={images[1].url}
-                alt={images[1].alt}
-                fill
-                sizes="(min-width: 768px) 24vw, 100vw"
-                className="object-cover object-center"
-              />
-            </div>
           </div>
         </div>
       </div>

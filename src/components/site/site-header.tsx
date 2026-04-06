@@ -62,7 +62,7 @@ export function SiteHeader() {
         <div className="flex items-center justify-between gap-4 md:h-full">
           <Link href="/" className="flex items-center">
             <Image
-              src="/assets/edisii-logo.png"
+              src="/assets/edisii-logo.svg"
               alt="Edisii logo"
               width={180}
               height={64}
@@ -75,24 +75,24 @@ export function SiteHeader() {
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMenuOpen}
             onClick={() => setIsMenuOpen((current) => !current)}
-            className="inline-flex h-10 w-10 items-center justify-center border border-black/10 bg-white/70 text-zinc-900 md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center text-zinc-900 md:hidden"
           >
             <span className="relative block h-4 w-5">
               <span
                 className={cn(
-                  "absolute left-0 top-0 h-px w-5 bg-current transition-all duration-300",
+                  "absolute left-0 top-0 h-[2px] w-5 bg-current transition-all duration-300",
                   isMenuOpen && "top-[7px] rotate-45"
                 )}
               />
               <span
                 className={cn(
-                  "absolute left-0 top-[7px] h-px w-5 bg-current transition-opacity duration-300",
+                  "absolute left-0 top-[7px] h-[2px] w-5 bg-current transition-opacity duration-300",
                   isMenuOpen && "opacity-0"
                 )}
               />
               <span
                 className={cn(
-                  "absolute left-0 top-[14px] h-px w-5 bg-current transition-all duration-300",
+                  "absolute left-0 top-[14px] h-[2px] w-5 bg-current transition-all duration-300",
                   isMenuOpen && "top-[7px] -rotate-45"
                 )}
               />
@@ -116,11 +116,19 @@ export function SiteHeader() {
                     }
                   }}
                   className={cn(
-                    "shrink-0 whitespace-nowrap text-[16px] uppercase transition-colors hover:text-zinc-500",
-                    isActive ? "font-bold text-zinc-950" : "font-normal text-zinc-700"
+                    "relative shrink-0 whitespace-nowrap text-[16px] uppercase transition-colors hover:text-zinc-500",
+                    isActive ? "text-zinc-950" : "text-zinc-700"
                   )}
                 >
-                  {item.label}
+                  <span className="invisible block font-bold">{item.label}</span>
+                  <span
+                    className={cn(
+                      "absolute inset-0 flex items-center justify-center",
+                      isActive ? "font-bold text-zinc-950" : "font-normal text-zinc-700"
+                    )}
+                  >
+                    {item.label}
+                  </span>
                 </Link>
               );
             })}
@@ -133,7 +141,7 @@ export function SiteHeader() {
             isMenuOpen ? "mt-4 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
           )}
         >
-          <nav className="min-h-0 border-t border-black/10 pt-4">
+          <nav className="min-h-0 max-h-[calc(100svh-88px)] overflow-y-auto border-t border-black/10 pt-4">
             <div className="flex flex-col gap-3 pb-1">
               {navItems.map((item) => {
                 const isActive = pathname === "/" && hash === item.hash;

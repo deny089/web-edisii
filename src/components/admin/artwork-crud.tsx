@@ -98,9 +98,15 @@ export function ArtworkCrud() {
     }
 
     requestAnimationFrame(() => {
-      formPanelRef.current?.scrollIntoView({
+      const header = document.getElementById("admin-header");
+      const headerOffset = header ? header.getBoundingClientRect().height + 16 : 88;
+      const formTop = formPanelRef.current
+        ? formPanelRef.current.getBoundingClientRect().top + window.scrollY
+        : 0;
+
+      window.scrollTo({
+        top: Math.max(formTop - headerOffset, 0),
         behavior: "smooth",
-        block: "start",
       });
     });
   };

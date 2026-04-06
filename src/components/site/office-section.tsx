@@ -46,6 +46,7 @@ export function OfficeSection({
 }: OfficeSectionProps) {
   const slides: Slide[] = [{ id: 0, align: "right", imageUrl, imageAlt }, ...staticSlides];
   const loopedSlides = [slides[slides.length - 1], ...slides, slides[0]];
+  const maxSlideIndex = slides.length + 1;
 
   const [activeSlide, setActiveSlide] = useState(1);
   const [isTransitionEnabled, setIsTransitionEnabled] = useState(true);
@@ -55,28 +56,28 @@ export function OfficeSection({
   useEffect(() => {
     const timer = window.setInterval(() => {
       setIsTransitionEnabled(true);
-      setActiveSlide((current) => current + 1);
+      setActiveSlide((current) => Math.min(current + 1, maxSlideIndex));
     }, 5000);
 
     return () => window.clearInterval(timer);
-  }, []);
+  }, [maxSlideIndex]);
 
   const currentSlideIndex =
     activeSlide === 0 ? slides.length - 1 : activeSlide === slides.length + 1 ? 0 : activeSlide - 1;
 
   const goToSlide = (index: number) => {
     setIsTransitionEnabled(true);
-    setActiveSlide(index + 1);
+    setActiveSlide(Math.min(Math.max(index + 1, 1), slides.length));
   };
 
   const goToNextSlide = () => {
     setIsTransitionEnabled(true);
-    setActiveSlide((current) => current + 1);
+    setActiveSlide((current) => Math.min(current + 1, maxSlideIndex));
   };
 
   const goToPreviousSlide = () => {
     setIsTransitionEnabled(true);
-    setActiveSlide((current) => current - 1);
+    setActiveSlide((current) => Math.max(current - 1, 0));
   };
 
   const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
@@ -133,14 +134,15 @@ export function OfficeSection({
   }, [isTransitionEnabled]);
 
   return (
-    <section id="office" className="scroll-mt-24 pb-8 pt-8 md:pb-14">
-      <div
-        className="relative w-full overflow-hidden bg-stone-950 shadow-[0_30px_100px_rgba(44,30,17,0.18)] touch-pan-y"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        <div className="relative aspect-[4/5] sm:aspect-[16/12] md:aspect-[21/8]">
+    <section id="office" className="scroll-mt-24 pb-0 pt-8 md:pt-10">
+      <div className="bg-[#ecebe8] p-3 md:p-4">
+        <div
+          className="relative w-full overflow-hidden bg-stone-950 shadow-[0_30px_100px_rgba(44,30,17,0.18)] touch-pan-y"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          <div className="relative aspect-[4/5] sm:aspect-[16/12] md:aspect-[21/8]">
           <div
             className="absolute inset-0 flex"
             onTransitionEnd={handleTransitionEnd}
@@ -159,7 +161,8 @@ export function OfficeSection({
                   fill
                   sizes="100vw"
                   className="object-cover"
-                  priority={index <= 1}
+                  loading="eager"
+                  priority
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.12),rgba(0,0,0,0.08))]" />
                 <div
@@ -194,6 +197,7 @@ export function OfficeSection({
                 }`}
               />
             ))}
+          </div>
           </div>
         </div>
       </div>

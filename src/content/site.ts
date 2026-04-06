@@ -31,7 +31,7 @@ export const homepageSections = {
     secondaryDescription:
       "Each certified print represents not only a beautiful artwork, but a shared belief in the value of collaboration and preservation of artistic legacy.\n\nWe believe the future of art collecting extends beyond traditional paintings. Art is evolving, and prints represent a new form of ownership, one that is just as meaningful, collectible, and enduring.",
     ctaLabel: "OUR CATALOGUE",
-    ctaHref: "/#certificate",
+    ctaHref: "/catalogue/E-Catalog-AJPAPERS-26.pdf",
     images: [
       {
         url: "/assets/collab-image-1.png",
