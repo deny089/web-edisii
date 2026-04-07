@@ -28,7 +28,7 @@ export function CertificateSection({
         <div className="mx-auto w-full max-w-[520px]">
           <div className="relative aspect-[10/11] w-full overflow-hidden">
             <Image
-              src="/assets/certificate-img.png"
+              src="/assets/certificate-img.jpg"
               alt="Certificate artwork presentation"
               fill
               sizes="(min-width: 768px) 34vw, 100vw"

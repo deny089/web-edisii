@@ -22,12 +22,12 @@ export const eventModalTabs: EventModalTab[] = [
       "For Art Jakarta Papers, EDISII brought together a selection of fine art prints by Indonesian contemporary artists, ranging from emerging to established figures. Each print in the presentation was created through a careful and collaborative process between EDISII and the artist.",
     ],
     gallery: [
-      "/images/events/Rectangle%2023.png",
-      "/images/events/Rectangle%2024.png",
-      "/images/events/Rectangle%2025.png",
-      "/images/events/Rectangle%2027.png",
-      "/images/events/Rectangle%2028.png",
-      "/images/events/Rectangle%2029.png",
+      "/images/events/img1.jpg",
+      "/images/events/img2.jpg",
+      "/images/events/img3.jpg",
+      "/images/events/img4.jpg",
+      "/images/events/img5.jpg",
+      "/images/events/img7.jpg",
     ],
   },
   {

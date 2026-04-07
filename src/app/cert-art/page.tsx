@@ -8,7 +8,7 @@ export default function CertArtPage() {
       <div className="mx-auto flex min-h-[100svh] w-full max-w-[420px] flex-col bg-white">
         <section className="relative h-[33dvh] min-h-[220px] max-h-[262px] overflow-hidden border border-black/5">
           <Image
-            src="/assets/nfc-bg.png"
+            src="/assets/nfc-bg.jpg"
             alt="EDISII certificate background"
             fill
             priority
@@ -18,7 +18,7 @@ export default function CertArtPage() {
           <div className="absolute inset-0 bg-black/34" />
           <div className="absolute inset-0 flex items-center justify-center px-10">
             <Image
-              src="/assets/edisii-footer.svg"
+              src="/assets/edisii-nfc.svg"
               alt="EDISII Art Print Publisher"
               width={218}
               height={70}

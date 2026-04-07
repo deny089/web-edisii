@@ -24,10 +24,7 @@ export function PublicShell({ children }: PublicShellProps) {
               height={40}
               className="h-auto w-[148px] md:w-[154px]"
             />
-            <p className="mt-1.5 text-[12px] uppercase tracking-[0.04em] text-zinc-800">
-              {siteSettings.companyTagline}
-            </p>
-            <p className="mt-5 text-[12px] text-zinc-900">
+            <p className="mt-4 text-[12px] text-zinc-900">
               Copyright 2026 by EDISII. All right reserved.
             </p>
           </div>

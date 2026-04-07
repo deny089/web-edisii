@@ -19,7 +19,7 @@ export const homepageSections = {
       "We collaborate with artists to create and produce high-quality, museum-grade art prints, whether based on existing works or specially created as limited editions.",
     secondaryDescription:
       "Our mission is to help artists present, preserve, and share their artwork through collectable print editions by combining fine printing craftsmanship and exquisite presentation with thoughtful collaboration. At EDISII Artprint Publisher, we are committed to support artists in expanding their reach and enhancing their presence in both the Indonesian and international art markets.",
-    imageUrl: "/assets/hero-banner.png",
+    imageUrl: "/assets/hero-banner.jpg",
     imageAlt: "Printing machine close-up",
   },
   collaboration: {
@@ -34,7 +34,7 @@ export const homepageSections = {
     ctaHref: "/catalogue/E-Catalog-AJPAPERS-26.pdf",
     images: [
       {
-        url: "/assets/collab-image-1.png",
+        url: "/assets/collab-image-1.jpg",
         alt: "Artists collaborating",
       },
       {
@@ -83,7 +83,7 @@ export const homepageSections = {
       "Our office serves as the creative heartbeat of EDISII, a dedicated space where raw concepts evolve into refined art prints through the power of solid collaboration and shared vision.",
     secondaryDescription:
       "That is where artists, publishers, and craftsmen unite, transforming initial sparks of inspiration into tangible masterpieces.",
-    imageUrl: "/assets/office-image.png",
+    imageUrl: "/assets/office-image.jpg",
     imageAlt: "Office interior",
   },
 };
