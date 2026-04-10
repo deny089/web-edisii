@@ -32,7 +32,7 @@ export function CollaborationSection({
     >
       <div className="grid grid-cols-1 items-center gap-7 md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.42fr)] md:gap-0">
           <div className="relative z-10 md:mr-[-20px] lg:mr-[-28px]">
-            <div className="bg-[#f7f7f6] px-6 py-12 md:px-12 md:py-16 lg:px-14">
+            <div className="bg-transparent px-6 py-12 md:bg-[#f7f7f6] md:px-12 md:py-16 lg:px-14">
               <div className="ml-auto flex max-w-[360px] flex-col items-end text-right lg:max-w-[380px]">
                 <h2 className="text-[30px] font-semibold leading-none text-black md:text-[32px]">
                   {title}

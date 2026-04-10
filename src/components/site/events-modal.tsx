@@ -20,9 +20,9 @@ export function EventsModal({ tabs, isVisible, onClose }: EventsModalProps) {
     <Modal
       visible={isVisible}
       onClose={onClose}
-      overlayClassName="z-[100] bg-white/90 px-2 py-2 md:px-6 md:py-4"
+      overlayClassName="z-[100] bg-white/90 p-0 md:px-6 md:py-4"
       containerClassName="items-stretch justify-center"
-      contentClassName={`flex h-full w-full max-w-[1180px] flex-col overflow-hidden bg-white shadow-[0_24px_80px_rgba(0,0,0,0.16)] transition-opacity duration-300 max-h-[min(680px,calc(100dvh-16px))] md:max-h-[min(680px,calc(100dvh-48px))] lg:max-h-[min(880px,calc(100dvh-48px))] ${
+      contentClassName={`flex h-[100dvh] w-full max-w-[1180px] flex-col overflow-hidden bg-white shadow-[0_24px_80px_rgba(0,0,0,0.16)] transition-opacity duration-300 md:h-full md:max-h-[min(680px,calc(100dvh-48px))] lg:max-h-[min(880px,calc(100dvh-48px))] ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     >
@@ -95,8 +95,8 @@ export function EventsModal({ tabs, isVisible, onClose }: EventsModalProps) {
         </div>
       </div>
 
-      <div className="px-4 pb-6 md:px-8 md:pb-8">
-        <div className="h-[320px] overflow-y-auto pt-6 sm:h-[360px] lg:h-[440px]">
+      <div className="min-h-0 flex-1 px-4 pb-6 md:flex-none md:px-8 md:pb-8">
+        <div className="h-full overflow-y-auto pt-6 md:h-[360px] lg:h-[440px]">
           {activeTab?.gallery?.length ? (
             <div className="columns-1 gap-4 sm:columns-2 lg:columns-4">
               {activeTab.gallery.map((src, index) => (

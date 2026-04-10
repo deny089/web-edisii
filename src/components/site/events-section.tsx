@@ -86,23 +86,23 @@ export function EventsSection({
 
   return (
     <>
-      <section id="event" className="scroll-mt-24 bg-white">
-        <div className="relative flex h-[470px] items-center overflow-hidden md:h-[560px]">
+      <section id="event" className="scroll-mt-24 bg-white pb-36 md:pb-0">
+        <div className="relative flex aspect-[1097/381] w-full items-end overflow-visible md:items-center md:overflow-hidden">
           <div className="absolute inset-0">
-            <Image src={imageUrl} alt={imageAlt} fill sizes="100vw" className="object-cover object-left" />
+            <Image src={imageUrl} alt={imageAlt} fill sizes="100vw" className="object-contain object-top" />
             <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.02),rgba(255,255,255,0.04))]" />
           </div>
 
-          <div className="relative z-10 ml-auto mr-4 flex w-full justify-end md:mr-[120px]">
-            <FrostPanel className="w-full max-w-[340px] px-6 py-6 md:translate-y-[-14px] md:max-w-[430px] md:px-8 md:py-8">
-              <h2 className="text-[32px] font-semibold leading-none text-stone-950">{title}</h2>
-              <div className="mt-6 text-[16px] leading-[1.45] text-stone-800">
+          <div className="relative z-10 flex w-full translate-y-[128px] justify-center px-8 md:ml-auto md:mr-[120px] md:translate-y-0 md:justify-end md:px-0">
+            <FrostPanel className="w-full bg-[#EEEEEE] px-9 pb-9 pt-8 shadow-none md:w-full md:max-w-[430px] md:translate-y-[-14px] md:bg-[rgba(255,255,255,0.8)] md:px-8 md:py-8 md:shadow-[0_18px_48px_rgba(0,0,0,0.05)]">
+              <h2 className="text-left text-[32px] font-semibold leading-none text-stone-950">{title}</h2>
+              <div className="mt-7 text-[20px] leading-[1.35] text-stone-800 md:mt-6 md:text-[16px] md:leading-[1.45]">
                 <p>{description}</p>
               </div>
               <button
                 type="button"
                 onClick={openModal}
-                className={`mt-7 ${siteEditorialButtonClassName}`}
+                className={`mt-9 md:mt-7 ${siteEditorialButtonClassName}`}
               >
                 {ctaLabel}
               </button>

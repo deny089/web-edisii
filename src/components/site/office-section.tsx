@@ -31,7 +31,7 @@ const staticSlides: Slide[] = [
   {
     id: 2,
     align: "right",
-    imageUrl: "/assets/collab-image-1.png",
+    imageUrl: "/assets/collab-image-1.jpg",
     imageAlt: "EDISII studio collaboration",
   },
 ];
