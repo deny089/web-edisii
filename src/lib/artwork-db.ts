@@ -201,6 +201,14 @@ function generateUniquePublicCode(db: Database.Database) {
   }
 }
 
+function isLegacyPublicCode(value: string | null | undefined) {
+  if (!value) {
+    return true;
+  }
+
+  return /^art\d{5}$/i.test(value.trim());
+}
+
 function getAllArtworkRows(db: Database.Database) {
   return db
     .prepare("SELECT * FROM artworks ORDER BY datetime(created_at) DESC, id DESC")
@@ -238,7 +246,9 @@ function normalizeArtworkUrls(db: Database.Database) {
 
   const transaction = db.transaction(() => {
     for (const row of rows) {
-      const nextCode = row.public_code?.trim() || generateUniquePublicCode(db);
+      const nextCode = isLegacyPublicCode(row.public_code)
+        ? generateUniquePublicCode(db)
+        : row.public_code.trim();
       const nextUrl = buildArtworkUrl(nextCode);
 
       if (row.url !== nextUrl || row.public_code !== nextCode) {
@@ -330,7 +340,7 @@ function seedArtworkTable(db: Database.Database) {
   const transaction = db.transaction(() => {
     for (let index = 0; index < seedItems.length; index += 1) {
       const item = seedItems[index];
-      const publicCode = `art${String(index + 1).padStart(5, "0")}`.slice(0, PUBLIC_CODE_LENGTH);
+      const publicCode = generateUniquePublicCode(db);
       insert.run({
         ...item,
         public_code: publicCode,
