@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EDISII Website
 
-## Getting Started
+Website company profile `EDISII` built with `Next.js`, `TypeScript`, and `Tailwind CSS`.
 
-First, run the development server:
+## Scope
+
+- Public website with modular sections:
+  - About
+  - Collaboration
+  - Event
+  - Certificate
+  - Office
+- Admin dashboard for artwork certificate management
+- Mobile-first `/cert-art` verification page
+
+## Tech Stack
+
+- Next.js 14
+- React 18
+- TypeScript
+- Tailwind CSS
+- SQLite via `better-sqlite3`
+
+## Run Locally
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Lint:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run lint
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Type-check:
 
-## Learn More
+```bash
+npx tsc --noEmit
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Main Routes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `/`
+  Public company profile website
+- `/admin`
+  Admin dashboard for artwork CRUD
+- `/cert-art?code=<publicCode>`
+  Artwork verification page
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Admin Artwork Storage
 
-## Deploy on Vercel
+Artwork data is stored in local SQLite:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `data/admin.sqlite`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Automatic backup snapshot is also generated:
+
+- `data/artworks.backup.json`
+
+The backup JSON is updated automatically whenever artwork data is:
+
+- created
+- updated
+- deleted
+
+## Artwork URL Strategy
+
+Each artwork has:
+
+- internal numeric `id`
+- public 8-character `publicCode`
+
+Public verification URL uses the public code:
+
+```txt
+/cert-art?code=kwpAZT8b
+```
+
+This means:
+
+- admin/internal flow can still use numeric IDs
+- public URLs do not expose sequential IDs directly
+
+## Notes
+
+- Public site is currently static and not connected to admin-managed content yet
+- Admin CRUD is already persisted locally for development
+- Current local SQLite approach is suitable for development and small internal use, but not ideal as final production persistence on Vercel

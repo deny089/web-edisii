@@ -30,6 +30,11 @@ yarn-error.log*
 .env.*
 !.env.example
 
+# local sqlite
+/data/*.sqlite
+/data/*.sqlite-*
+/data/artworks.backup.json
+
 # vercel
 .vercel
 

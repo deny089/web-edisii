@@ -95,8 +95,8 @@ export function EventsSection({
 
           <div className="relative z-10 flex w-full translate-y-[128px] justify-center px-8 md:ml-auto md:mr-[120px] md:translate-y-0 md:justify-end md:px-0">
             <FrostPanel className="w-full bg-[#EEEEEE] px-9 pb-9 pt-8 shadow-none md:w-full md:max-w-[430px] md:translate-y-[-14px] md:bg-[rgba(255,255,255,0.8)] md:px-8 md:py-8 md:shadow-[0_18px_48px_rgba(0,0,0,0.05)]">
-              <h2 className="text-left text-[32px] font-semibold leading-none text-stone-950">{title}</h2>
-              <div className="mt-7 text-[20px] leading-[1.35] text-stone-800 md:mt-6 md:text-[16px] md:leading-[1.45]">
+              <h2 className="text-left text-[30px] font-semibold leading-none text-stone-950 md:text-[32px]">{title}</h2>
+              <div className="mt-7 text-[16px] leading-[1.45] text-stone-800 md:mt-6 md:text-[16px] md:leading-[1.45]">
                 <p>{description}</p>
               </div>
               <button

@@ -1,8 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
 import { siteEditorialButtonClassName } from "@/components/site/site-link-button";
+import { getArtworkByPublicCode } from "@/lib/artwork-db";
 
-export default function CertArtPage() {
+type CertArtPageProps = {
+  searchParams?: {
+    code?: string;
+  };
+};
+
+export default function CertArtPage({ searchParams }: CertArtPageProps) {
+  const codeValue = searchParams?.code?.trim() || "";
+  const artwork = codeValue ? getArtworkByPublicCode(codeValue) : null;
+  const artworkLabel = artwork
+    ? `${artwork.title} - ${artwork.artist} - ${artwork.edition}`
+    : "Artwork Verification";
+
   return (
     <main className="h-[100dvh] overflow-x-hidden overflow-y-auto bg-[#f7f6f3] text-zinc-900">
       <div className="mx-auto flex min-h-[100svh] w-full max-w-[420px] flex-col bg-white">
@@ -29,9 +42,9 @@ export default function CertArtPage() {
         </section>
 
         <section className="flex flex-1 flex-col justify-between px-6 pb-5 pt-7">
-          <div className="mx-auto w-full max-w-[242px] bg-[#e6e3df] px-4 py-3 text-center">
-            <p className="whitespace-nowrap text-center text-[14px] font-semibold uppercase tracking-[0.08em] text-zinc-900">
-              Wednesday - Knifmare #1/7
+          <div className="mx-auto inline-flex max-w-[calc(100vw-48px)] items-center justify-center bg-[#e6e3df] px-4 py-3 text-center">
+            <p className="text-center text-[14px] font-semibold uppercase tracking-[0.08em] text-zinc-900">
+              {artworkLabel}
             </p>
           </div>
 
