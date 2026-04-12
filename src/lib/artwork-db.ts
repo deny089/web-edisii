@@ -1,6 +1,7 @@
 import Database from "better-sqlite3";
 import { randomBytes } from "node:crypto";
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import type { ArtworkFormPayload, ArtworkItem, ArtworkStatus } from "@/types/artwork";
 
@@ -31,7 +32,10 @@ type SeedArtworkItem = {
   status: ArtworkStatus;
 };
 
-const dataDir = path.join(process.cwd(), "data");
+const baseDataDir = process.env.VERCEL
+  ? path.join(os.tmpdir(), "web-edisii-data")
+  : path.join(process.cwd(), "data");
+const dataDir = baseDataDir;
 const dbPath = path.join(dataDir, "admin.sqlite");
 const backupPath = path.join(dataDir, "artworks.backup.json");
 const CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789";

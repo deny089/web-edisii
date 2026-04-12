@@ -13,7 +13,12 @@ type DeletePayload = { id: number };
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  return NextResponse.json({ items: listArtworks() });
+  try {
+    return NextResponse.json({ items: listArtworks() });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Failed to load artworks";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
 }
 
 export async function POST(request: Request) {
