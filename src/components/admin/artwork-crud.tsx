@@ -133,10 +133,9 @@ export function ArtworkCrud() {
   const handleExport = () => {
     const rows = filteredItems
       .map(
-        (item) => `
+        (item, index) => `
           <tr>
-            <td>${item.id}</td>
-            <td>${item.publicCode}</td>
+            <td>${index + 1}</td>
             <td>${item.title}</td>
             <td>${item.artist}</td>
             <td>${item.edition}</td>
@@ -152,8 +151,7 @@ export function ArtworkCrud() {
       <table>
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Public Code</th>
+            <th>No.</th>
             <th>Title</th>
             <th>Artist</th>
             <th>Edition</th>
@@ -377,8 +375,7 @@ export function ArtworkCrud() {
             <table className="min-w-[980px] w-full border-collapse">
               <thead className="bg-slate-50">
                 <tr className="border-b border-slate-200">
-                  <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-[0.14em] text-slate-500">ID</th>
-                  <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-[0.14em] text-slate-500">Code</th>
+                  <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-[0.14em] text-slate-500">No.</th>
                   <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-[0.14em] text-slate-500">Title</th>
                   <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-[0.14em] text-slate-500">Artist</th>
                   <th className="px-4 py-3 text-left text-[11px] font-medium uppercase tracking-[0.14em] text-slate-500">Edition</th>
@@ -389,7 +386,7 @@ export function ArtworkCrud() {
                 </tr>
               </thead>
               <tbody>
-                {paginatedItems.map((item) => (
+                {paginatedItems.map((item, index) => (
                   <tr
                     key={item.id}
                     className={cn(
@@ -397,8 +394,9 @@ export function ArtworkCrud() {
                       editingId === item.id ? "bg-slate-50" : "bg-white"
                     )}
                   >
-                    <td className="px-4 py-4 text-[13px] font-medium text-slate-500">{item.id}</td>
-                    <td className="px-4 py-4 text-[13px] font-medium text-slate-500">{item.publicCode}</td>
+                    <td className="px-4 py-4 text-[13px] font-medium text-slate-500">
+                      {(currentPage - 1) * ITEMS_PER_PAGE + index + 1}
+                    </td>
                     <td className="px-4 py-4 text-[14px] font-medium text-slate-950">{item.title}</td>
                     <td className="px-4 py-4 text-[13px] text-slate-700">{item.artist}</td>
                     <td className="px-4 py-4 text-[13px] text-slate-700">{item.edition}</td>
@@ -440,7 +438,7 @@ export function ArtworkCrud() {
                 ))}
                 {paginatedItems.length === 0 ? (
                   <tr className="border-b border-slate-200 bg-white">
-                    <td colSpan={9} className="px-4 py-10 text-center text-[14px] text-slate-500">
+                    <td colSpan={7} className="px-4 py-10 text-center text-[14px] text-slate-500">
                       No artwork entries found.
                     </td>
                   </tr>

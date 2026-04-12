@@ -1,5 +1,5 @@
 import Database from "better-sqlite3";
-import { randomBytes } from "node:crypto";
+import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -40,6 +40,7 @@ const dbPath = path.join(dataDir, "admin.sqlite");
 const backupPath = path.join(dataDir, "artworks.backup.json");
 const CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789";
 const PUBLIC_CODE_LENGTH = 8;
+const PUBLIC_CODE_SALT = "EDISII_ARTWORK_PUBLIC_CODE_V1";
 
 function buildArtworkUrl(publicCode: string) {
   return `/cert-art?code=${publicCode}`;
@@ -170,43 +171,18 @@ function mapRow(row: ArtworkRow): ArtworkItem {
   };
 }
 
-function generatePublicCode() {
+function buildDeterministicPublicCode(id: number) {
+  const digest = createHash("sha256")
+    .update(`${PUBLIC_CODE_SALT}:${id}`)
+    .digest();
+
   let code = "";
 
-  while (code.length < PUBLIC_CODE_LENGTH) {
-    const bytes = randomBytes(PUBLIC_CODE_LENGTH);
-    for (let index = 0; index < bytes.length; index += 1) {
-      const byte = bytes[index];
-      if (code.length >= PUBLIC_CODE_LENGTH) {
-        break;
-      }
-
-      code += CODE_ALPHABET[byte % CODE_ALPHABET.length];
-    }
+  for (let index = 0; index < digest.length && code.length < PUBLIC_CODE_LENGTH; index += 1) {
+    code += CODE_ALPHABET[digest[index] % CODE_ALPHABET.length];
   }
 
   return code;
-}
-
-function generateUniquePublicCode(db: Database.Database) {
-  const existing = db.prepare("SELECT id FROM artworks WHERE public_code = ? LIMIT 1");
-
-  while (true) {
-    const code = generatePublicCode();
-    const match = existing.get(code) as { id: number } | undefined;
-
-    if (!match) {
-      return code;
-    }
-  }
-}
-
-function isLegacyPublicCode(value: string | null | undefined) {
-  if (!value) {
-    return true;
-  }
-
-  return /^art\d{5}$/i.test(value.trim());
 }
 
 function getAllArtworkRows(db: Database.Database) {
@@ -246,9 +222,7 @@ function normalizeArtworkUrls(db: Database.Database) {
 
   const transaction = db.transaction(() => {
     for (const row of rows) {
-      const nextCode = isLegacyPublicCode(row.public_code)
-        ? generateUniquePublicCode(db)
-        : row.public_code.trim();
+      const nextCode = buildDeterministicPublicCode(Number(row.id));
       const nextUrl = buildArtworkUrl(nextCode);
 
       if (row.url !== nextUrl || row.public_code !== nextCode) {
@@ -340,7 +314,7 @@ function seedArtworkTable(db: Database.Database) {
   const transaction = db.transaction(() => {
     for (let index = 0; index < seedItems.length; index += 1) {
       const item = seedItems[index];
-      const publicCode = generateUniquePublicCode(db);
+      const publicCode = buildDeterministicPublicCode(index + 1);
       insert.run({
         ...item,
         public_code: publicCode,
@@ -416,19 +390,18 @@ export function createArtwork(payload: ArtworkFormPayload): ArtworkItem {
   validatePayload(payload);
   const db = getDb();
   const now = new Date().toISOString();
-  const publicCode = generateUniquePublicCode(db);
 
   const result = db.prepare(`
     INSERT INTO artworks (public_code, title, artist, edition, year, url, status, created_at, updated_at)
     VALUES (@public_code, @title, @artist, @edition, @year, @url, @status, @created_at, @updated_at)
   `).run({
-    public_code: publicCode,
+    public_code: "",
     ...payload,
     title: payload.title.trim(),
     artist: payload.artist.trim(),
     edition: payload.edition.trim(),
     year: payload.year.trim(),
-    url: buildArtworkUrl(publicCode),
+    url: "",
     created_at: now,
     updated_at: now,
   });
@@ -436,6 +409,13 @@ export function createArtwork(payload: ArtworkFormPayload): ArtworkItem {
   syncArtworkBackup(db);
 
   const createdId = Number(result.lastInsertRowid);
+  const publicCode = buildDeterministicPublicCode(createdId);
+  db.prepare("UPDATE artworks SET public_code = @public_code, url = @url WHERE id = @id").run({
+    id: createdId,
+    public_code: publicCode,
+    url: buildArtworkUrl(publicCode),
+  });
+  syncArtworkBackup(db);
   const row = db.prepare("SELECT * FROM artworks WHERE id = ?").get(createdId) as ArtworkRow;
   return mapRow(row);
 }
