@@ -89,7 +89,13 @@ export function EventsSection({
       <section id="event" className="scroll-mt-24 bg-white pb-36 md:pb-0">
         <div className="relative flex aspect-[1097/381] w-full items-end overflow-visible md:items-center md:overflow-hidden">
           <div className="absolute inset-0">
-            <Image src={imageUrl} alt={imageAlt} fill sizes="100vw" className="object-contain object-top" />
+            <Image
+              src={imageUrl}
+              alt={imageAlt}
+              fill
+              sizes="100vw"
+              className="object-contain object-top md:object-cover md:object-left"
+            />
             <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.02),rgba(255,255,255,0.04))]" />
           </div>
 

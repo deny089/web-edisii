@@ -1,14 +1,11 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { SiteLinkButton } from "@/components/site/site-link-button";
 
 type CollaborationSectionProps = {
   eyebrow: string;
   title: string;
   description: string;
   secondaryDescription: string;
-  ctaLabel: string;
-  ctaHref: string;
   images: Array<{ url: string; alt: string }>;
 };
 
@@ -16,8 +13,6 @@ export function CollaborationSection({
   title,
   description,
   secondaryDescription,
-  ctaLabel,
-  ctaHref,
   images,
 }: CollaborationSectionProps) {
   const supportingParagraphs = secondaryDescription
@@ -32,20 +27,17 @@ export function CollaborationSection({
     >
       <div className="grid grid-cols-1 items-center gap-7 md:grid-cols-[minmax(0,0.92fr)_minmax(0,1.42fr)] md:gap-0">
           <div className="relative z-10 md:mr-[-20px] lg:mr-[-28px]">
-            <div className="bg-transparent px-6 py-12 md:bg-[#f7f7f6] md:px-12 md:py-16 lg:px-14">
+            <div className="bg-transparent px-6 py-12 md:bg-[#f7f7f6] md:px-12 md:py-20 lg:px-14">
               <div className="ml-auto flex max-w-[360px] flex-col items-end text-right lg:max-w-[380px]">
                 <h2 className="text-[30px] font-semibold leading-none text-black md:text-[32px]">
                   {title}
                 </h2>
-                <div className="mt-7 flex flex-col items-end gap-6 text-[15px] leading-[1.5] text-black md:mt-8 md:gap-7 md:text-[16px] md:leading-[1.45]">
+                <div className="mt-10 flex flex-col items-end gap-6 text-[15px] leading-[1.5] text-black md:mt-12 md:gap-7 md:text-[16px] md:leading-[1.45]">
                   <p>{description}</p>
                   {supportingParagraphs.map((paragraph) => (
                     <p key={paragraph}>{paragraph}</p>
                   ))}
                 </div>
-                <SiteLinkButton href={ctaHref} download className="mt-10 self-end">
-                  {ctaLabel}
-                </SiteLinkButton>
               </div>
             </div>
           </div>

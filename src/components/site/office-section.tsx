@@ -50,32 +50,46 @@ export function OfficeSection({
 
   const [activeSlide, setActiveSlide] = useState(1);
   const [isTransitionEnabled, setIsTransitionEnabled] = useState(true);
+  const [isAutoplayEnabled, setIsAutoplayEnabled] = useState(true);
   const touchStartX = useRef<number | null>(null);
   const touchDeltaX = useRef(0);
 
   useEffect(() => {
+    if (!isAutoplayEnabled) {
+      return;
+    }
+
     const timer = window.setInterval(() => {
       setIsTransitionEnabled(true);
       setActiveSlide((current) => Math.min(current + 1, maxSlideIndex));
-    }, 5000);
+    }, 10000);
 
     return () => window.clearInterval(timer);
-  }, [maxSlideIndex]);
+  }, [isAutoplayEnabled, maxSlideIndex]);
 
   const currentSlideIndex =
     activeSlide === 0 ? slides.length - 1 : activeSlide === slides.length + 1 ? 0 : activeSlide - 1;
 
-  const goToSlide = (index: number) => {
+  const goToSlide = (index: number, manual = true) => {
+    if (manual) {
+      setIsAutoplayEnabled(false);
+    }
     setIsTransitionEnabled(true);
     setActiveSlide(Math.min(Math.max(index + 1, 1), slides.length));
   };
 
-  const goToNextSlide = () => {
+  const goToNextSlide = (manual = true) => {
+    if (manual) {
+      setIsAutoplayEnabled(false);
+    }
     setIsTransitionEnabled(true);
     setActiveSlide((current) => Math.min(current + 1, maxSlideIndex));
   };
 
-  const goToPreviousSlide = () => {
+  const goToPreviousSlide = (manual = true) => {
+    if (manual) {
+      setIsAutoplayEnabled(false);
+    }
     setIsTransitionEnabled(true);
     setActiveSlide((current) => Math.max(current - 1, 0));
   };
@@ -100,9 +114,9 @@ export function OfficeSection({
 
     if (Math.abs(touchDeltaX.current) > 48) {
       if (touchDeltaX.current < 0) {
-        goToNextSlide();
+        goToNextSlide(true);
       } else {
-        goToPreviousSlide();
+        goToPreviousSlide(true);
       }
     }
 
@@ -191,7 +205,7 @@ export function OfficeSection({
                 key={slide.id}
                 type="button"
                 aria-label={`Go to office slide ${index + 1}`}
-                onClick={() => goToSlide(index)}
+                onClick={() => goToSlide(index, true)}
                 className={`h-2.5 w-2.5 rounded-full transition ${
                   index === currentSlideIndex ? "bg-white" : "bg-white/45"
                 }`}

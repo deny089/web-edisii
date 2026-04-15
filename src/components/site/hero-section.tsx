@@ -13,7 +13,6 @@ export function HeroSection({
   title,
   description,
   secondaryDescription,
-  imageUrl,
   imageAlt,
 }: HeroSectionProps) {
   return (
@@ -22,14 +21,36 @@ export function HeroSection({
       className="relative flex h-[520px] w-full scroll-mt-24 items-end overflow-hidden bg-black text-white sm:h-[580px] md:h-[620px] lg:h-[620px]"
     >
       <div className="absolute inset-0 z-0 select-none">
-        <Image
-          src={imageUrl}
-          alt={imageAlt}
-          fill
-          sizes="100vw"
-          className="object-cover object-center grayscale"
-          priority
-        />
+        <div className="absolute inset-0 md:hidden">
+          <Image
+            src="/assets/about-bg.jpg"
+            alt={imageAlt}
+            fill
+            sizes="100vw"
+            className="object-cover object-center grayscale"
+            priority
+          />
+        </div>
+        <div className="absolute inset-0 hidden md:block">
+          <Image
+            src="/assets/about-bg.jpg"
+            alt={imageAlt}
+            fill
+            sizes="100vw"
+            className="object-cover object-center grayscale"
+            priority
+          />
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/assets/about-bg.jpg"
+            className="absolute inset-0 h-full w-full object-cover object-center grayscale"
+          >
+            <source src="/assets/bg-video-about.mp4" type="video/mp4" />
+          </video>
+        </div>
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.32),rgba(0,0,0,0.54))]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_left,rgba(0,0,0,0.30),transparent_34%)]" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-[linear-gradient(180deg,transparent,rgba(0,0,0,0.76))]" />
