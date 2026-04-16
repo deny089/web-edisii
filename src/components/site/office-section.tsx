@@ -21,30 +21,29 @@ type Slide = {
   imageAlt: string;
 };
 
-const staticSlides: Slide[] = [
+const officeSlides: Slide[] = [
   {
     id: 1,
-    align: "left",
-    imageUrl: "/assets/event-image.png",
+    align: "right",
+    imageUrl: "/assets/office-image-1.jpg",
     imageAlt: "EDISII gallery space",
   },
   {
     id: 2,
-    align: "right",
-    imageUrl: "/assets/collab-image-1.jpg",
+    align: "left",
+    imageUrl: "/assets/office-image-2.jpg",
     imageAlt: "EDISII studio collaboration",
+  },
+  {
+    id: 3,
+    align: "right",
+    imageUrl: "/assets/office-image-3.jpg",
+    imageAlt: "EDISII office interior",
   },
 ];
 
-export function OfficeSection({
-  eyebrow,
-  title,
-  description,
-  secondaryDescription,
-  imageUrl,
-  imageAlt,
-}: OfficeSectionProps) {
-  const slides: Slide[] = [{ id: 0, align: "right", imageUrl, imageAlt }, ...staticSlides];
+export function OfficeSection({ eyebrow, title, description, secondaryDescription }: OfficeSectionProps) {
+  const slides: Slide[] = officeSlides;
   const loopedSlides = [slides[slides.length - 1], ...slides, slides[0]];
   const maxSlideIndex = slides.length + 1;
 

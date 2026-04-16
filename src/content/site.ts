@@ -38,7 +38,7 @@ export const homepageSections = {
         alt: "Artists collaborating",
       },
       {
-        url: "/assets/collab-image-3.png",
+        url: "/assets/collab-image-4.jpeg",
         alt: "Fine art print production",
       },
     ],
