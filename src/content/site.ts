@@ -26,6 +26,7 @@ export const homepageSections = {
     id: "collaboration",
     eyebrow: "How we work",
     title: "COLLABORATION",
+    youtubeUrl: "https://youtu.be/WSgnVjV36BQ",
     description:
       "EDISII connects artists, galleries, and collectors through integrity, innovation, and quality.",
     secondaryDescription:

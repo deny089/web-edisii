@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import {
   createArtwork,
@@ -5,6 +6,7 @@ import {
   listArtworks,
   updateArtwork,
 } from "@/lib/artwork-db";
+import { ADMIN_SESSION_COOKIE, verifyAdminSessionValue } from "@/lib/admin-auth";
 import type { ArtworkFormPayload } from "@/types/artwork";
 
 type UpdatePayload = ArtworkFormPayload & { id: number };
@@ -12,7 +14,23 @@ type DeletePayload = { id: number };
 
 export const dynamic = "force-dynamic";
 
+async function ensureAuthorized() {
+  const cookieStore = await cookies();
+  const sessionValue = cookieStore.get(ADMIN_SESSION_COOKIE)?.value;
+
+  if (!verifyAdminSessionValue(sessionValue)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  return null;
+}
+
 export async function GET() {
+  const unauthorizedResponse = await ensureAuthorized();
+  if (unauthorizedResponse) {
+    return unauthorizedResponse;
+  }
+
   try {
     return NextResponse.json({ items: listArtworks() });
   } catch (error) {
@@ -22,6 +40,11 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const unauthorizedResponse = await ensureAuthorized();
+  if (unauthorizedResponse) {
+    return unauthorizedResponse;
+  }
+
   try {
     const payload = (await request.json()) as ArtworkFormPayload;
     const item = createArtwork(payload);
@@ -33,6 +56,11 @@ export async function POST(request: Request) {
 }
 
 export async function PUT(request: Request) {
+  const unauthorizedResponse = await ensureAuthorized();
+  if (unauthorizedResponse) {
+    return unauthorizedResponse;
+  }
+
   try {
     const payload = (await request.json()) as UpdatePayload;
     const { id, ...form } = payload;
@@ -45,6 +73,11 @@ export async function PUT(request: Request) {
 }
 
 export async function DELETE(request: Request) {
+  const unauthorizedResponse = await ensureAuthorized();
+  if (unauthorizedResponse) {
+    return unauthorizedResponse;
+  }
+
   try {
     const payload = (await request.json()) as DeletePayload;
     deleteArtwork(payload.id);

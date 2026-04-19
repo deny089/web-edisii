@@ -54,8 +54,86 @@ export function SiteHeader() {
   }, [pathname]);
 
   useEffect(() => {
+    if (pathname !== "/" || typeof window === "undefined") {
+      return;
+    }
+
+    const updateActiveSection = () => {
+      const header = document.getElementById("site-header");
+      const headerOffset = header ? header.getBoundingClientRect().height : 96;
+      const marker = window.scrollY + headerOffset + 24;
+
+      let currentHash = navItems[0]?.hash ?? "#about";
+
+      for (const item of navItems) {
+        const section = document.querySelector<HTMLElement>(item.hash);
+        if (!section) {
+          continue;
+        }
+
+        if (section.offsetTop <= marker) {
+          currentHash = item.hash;
+        }
+      }
+
+      setHash((previousHash) => {
+        if (previousHash === currentHash) {
+          return previousHash;
+        }
+
+        window.history.replaceState(null, "", `/${currentHash}`);
+        return currentHash;
+      });
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+
+    return () => {
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+    };
+  }, [pathname]);
+
+  useEffect(() => {
     setIsMenuOpen(false);
-  }, [pathname, hash]);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const handleViewportChange = (event: MediaQueryListEvent) => {
+      if (event.matches) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    mediaQuery.addEventListener("change", handleViewportChange);
+
+    return () => mediaQuery.removeEventListener("change", handleViewportChange);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const isMobileViewport = window.matchMedia("(max-width: 767px)").matches;
+    if (!isMenuOpen || !isMobileViewport) {
+      return;
+    }
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [isMenuOpen]);
 
   return (
     <header id="site-header" className="sticky top-0 z-50 w-full border-b border-black/5 bg-background/85 backdrop-blur-md">
@@ -138,11 +216,11 @@ export function SiteHeader() {
 
         <div
           className={cn(
-            "grid overflow-hidden transition-[grid-template-rows,opacity,margin] duration-300 md:hidden",
-            isMenuOpen ? "mt-4 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+            "overflow-hidden transition-[max-height,opacity,transform,margin] duration-300 ease-out md:hidden",
+            isMenuOpen ? "mt-4 max-h-[calc(100svh-88px)] translate-y-0 opacity-100" : "pointer-events-none mt-0 max-h-0 -translate-y-2 opacity-0"
           )}
         >
-          <nav className="min-h-0 max-h-[calc(100svh-88px)] overflow-y-auto border-t border-black/10 pt-4">
+          <nav className="max-h-[calc(100svh-88px)] overflow-y-auto border-t border-black/10 pt-4">
             <div className="flex flex-col gap-3 pb-1">
               {navItems.map((item) => {
                 const isActive = pathname === "/" && hash === item.hash;

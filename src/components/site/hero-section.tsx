@@ -26,7 +26,7 @@ export function HeroSection({
             src="/assets/about-bg.jpg"
             alt={imageAlt}
             fill
-            sizes="100vw"
+            sizes="(max-width: 767px) 100vw, 0px"
             className="object-cover object-center grayscale"
             priority
           />
@@ -36,7 +36,7 @@ export function HeroSection({
             src="/assets/about-bg.jpg"
             alt={imageAlt}
             fill
-            sizes="100vw"
+            sizes="(max-width: 767px) 0px, 100vw"
             className="object-cover object-center grayscale"
             priority
           />

@@ -76,6 +76,7 @@ export function AdminShell({
   const router = useRouter();
   const [isLogoutOpen, setIsLogoutOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
     if (!isLogoutOpen) {
@@ -89,6 +90,20 @@ export function AdminShell({
       document.body.style.removeProperty("overflow");
     };
   }, [isLogoutOpen]);
+
+  const handleConfirmLogout = async () => {
+    setIsLoggingOut(true);
+
+    try {
+      await fetch("/api/eds-auth/logout", {
+        method: "POST",
+      });
+    } finally {
+      router.push("/eds-login");
+      router.refresh();
+      setIsLoggingOut(false);
+    }
+  };
 
   return (
     <>
@@ -206,7 +221,7 @@ export function AdminShell({
           <p className="text-[12px] uppercase tracking-[0.16em] text-slate-500">Confirmation</p>
           <h3 className="mt-3 text-[24px] font-semibold leading-none text-slate-950">Logout from admin?</h3>
           <p className="mt-4 text-[14px] leading-relaxed text-slate-600">
-            This action currently only closes the confirmation flow. Authentication is not yet connected.
+            You will be signed out from the current admin session and redirected to the login page.
           </p>
           <div className="mt-6 grid gap-3 sm:flex sm:flex-wrap">
             <button
@@ -218,10 +233,11 @@ export function AdminShell({
             </button>
             <button
               type="button"
-              onClick={() => router.push("/")}
+              onClick={handleConfirmLogout}
+              disabled={isLoggingOut}
               className="inline-flex min-h-11 w-full items-center justify-center rounded-none border border-rose-200 bg-rose-50 px-5 py-3 text-[13px] font-medium text-rose-600 transition-colors hover:bg-rose-100 sm:w-auto"
             >
-              Confirm Logout
+              {isLoggingOut ? "Signing Out..." : "Confirm Logout"}
             </button>
           </div>
         </Modal>

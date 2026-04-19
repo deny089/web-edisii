@@ -30,9 +30,9 @@ export const metadata: Metadata = {
   title: "EDISII",
   description: "Art print publisher company profile website.",
   icons: {
-    icon: "/assets/favicon-edisii.jpg.jpeg",
-    shortcut: "/assets/favicon-edisii.jpg.jpeg",
-    apple: "/assets/favicon-edisii.jpg.jpeg",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
 };
 

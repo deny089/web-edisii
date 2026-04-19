@@ -31,14 +31,8 @@ const officeSlides: Slide[] = [
   {
     id: 2,
     align: "left",
-    imageUrl: "/assets/office-image-2.jpg",
+    imageUrl: "/assets/image-02-Rev.jpg",
     imageAlt: "EDISII studio collaboration",
-  },
-  {
-    id: 3,
-    align: "right",
-    imageUrl: "/assets/office-image-3.jpg",
-    imageAlt: "EDISII office interior",
   },
 ];
 
