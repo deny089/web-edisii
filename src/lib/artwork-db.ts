@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import seedArtworkItemsJson from "@/lib/artwork-seed-data.json";
 import type { ArtworkFormPayload, ArtworkItem, ArtworkStatus } from "@/types/artwork";
 
 type ArtworkRow = {
@@ -46,104 +47,7 @@ function buildArtworkUrl(publicCode: string) {
   return `/cert-art?code=${publicCode}`;
 }
 
-const seedItems: SeedArtworkItem[] = [
-  {
-    title: "Wednesday - Knifmare",
-    artist: "Heri Dono",
-    edition: "1/7",
-    year: "2026",
-    url: "/cert-art?code=1",
-    status: "Published",
-  },
-  {
-    title: "Blue Field Notes",
-    artist: "Ykha Amelz",
-    edition: "3/12",
-    year: "2025",
-    url: "/cert-art?code=2",
-    status: "Draft",
-  },
-  {
-    title: "Quiet Surface",
-    artist: "Indieguerillas",
-    edition: "2/10",
-    year: "2025",
-    url: "/cert-art?code=3",
-    status: "Published",
-  },
-  {
-    title: "Echoes of Stone",
-    artist: "Tromarama",
-    edition: "5/9",
-    year: "2024",
-    url: "/cert-art?code=4",
-    status: "Draft",
-  },
-  {
-    title: "Silent River",
-    artist: "Eko Nugroho",
-    edition: "4/11",
-    year: "2025",
-    url: "/cert-art?code=5",
-    status: "Published",
-  },
-  {
-    title: "Red Horizon",
-    artist: "Entang Wiharso",
-    edition: "2/8",
-    year: "2026",
-    url: "/cert-art?code=6",
-    status: "Draft",
-  },
-  {
-    title: "Paper Memory",
-    artist: "Agan Harahap",
-    edition: "6/15",
-    year: "2025",
-    url: "/cert-art?code=7",
-    status: "Published",
-  },
-  {
-    title: "Urban Bloom",
-    artist: "S. Teddy D",
-    edition: "1/5",
-    year: "2024",
-    url: "/cert-art?code=8",
-    status: "Draft",
-  },
-  {
-    title: "Still Night",
-    artist: "Arahmaiani",
-    edition: "3/6",
-    year: "2026",
-    url: "/cert-art?code=9",
-    status: "Published",
-  },
-  {
-    title: "Golden Ash",
-    artist: "Mella Jaarsma",
-    edition: "2/7",
-    year: "2025",
-    url: "/cert-art?code=10",
-    status: "Draft",
-  },
-  {
-    title: "Mirror Field",
-    artist: "Made Wianta",
-    edition: "7/20",
-    year: "2024",
-    url: "/cert-art?code=11",
-    status: "Published",
-  },
-  {
-    title: "Midday Blue",
-    artist: "Nindityo Adipurnomo",
-    edition: "1/9",
-    year: "2026",
-    url: "/cert-art?code=12",
-    status: "Draft",
-  },
-];
+const seedItems = seedArtworkItemsJson as SeedArtworkItem[];
 
 declare global {
   // eslint-disable-next-line no-var
@@ -328,6 +232,34 @@ function seedArtworkTable(db: Database.Database) {
   transaction();
 }
 
+function replaceArtworkTableWithSeedItems(db: Database.Database) {
+  const deleteAll = db.prepare("DELETE FROM artworks");
+  const insert = db.prepare(`
+    INSERT INTO artworks (public_code, title, artist, edition, year, url, status, created_at, updated_at)
+    VALUES (@public_code, @title, @artist, @edition, @year, @url, @status, @created_at, @updated_at)
+  `);
+  const now = new Date().toISOString();
+
+  const transaction = db.transaction(() => {
+    deleteAll.run();
+
+    for (let index = 0; index < seedItems.length; index += 1) {
+      const item = seedItems[index];
+      const publicCode = buildDeterministicPublicCode(index + 1);
+      insert.run({
+        ...item,
+        public_code: publicCode,
+        url: buildArtworkUrl(publicCode),
+        created_at: now,
+        updated_at: now,
+      });
+    }
+  });
+
+  transaction();
+  syncArtworkBackup(db);
+}
+
 function getDb() {
   if (global.__artworkDb__) {
     return global.__artworkDb__;
@@ -472,4 +404,9 @@ export function deleteArtwork(id: number) {
   }
 
   syncArtworkBackup(db);
+}
+
+export function replaceArtworksWithSeedData() {
+  const db = getDb();
+  replaceArtworkTableWithSeedItems(db);
 }
