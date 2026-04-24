@@ -95,3 +95,5 @@ This means:
 - Public site is currently static and not connected to admin-managed content yet
 - Admin CRUD is already persisted locally for development
 - Current local SQLite approach is suitable for development and small internal use, but not ideal as final production persistence on Vercel
+
+#cek commit
