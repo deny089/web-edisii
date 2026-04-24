@@ -96,7 +96,7 @@ export function EventsModal({ tabs, isVisible, onClose }: EventsModalProps) {
       </div>
 
       <div className="min-h-0 flex-1 px-4 pb-6 md:flex-none md:px-8 md:pb-8">
-        <div className="h-full overflow-y-auto pt-6 md:h-[360px] lg:h-[440px]">
+        <div className="h-full overflow-y-auto pt-6 md:h-[360px]">
           {activeTab?.gallery?.length ? (
             <div className="columns-1 gap-4 sm:columns-2 lg:columns-4">
               {activeTab.gallery.map((src, index) => (

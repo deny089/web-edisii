@@ -14,17 +14,17 @@ export function PublicShell({ children }: PublicShellProps) {
 
       <main className="flex-1">{children}</main>
 
-      <footer className="bg-[#D8D6D6] py-8 md:py-8">
+      <footer className="bg-[#000000] py-8 md:py-8">
         <div className="mx-auto flex w-full max-w-[1440px] flex-col justify-between gap-8 px-6 md:flex-row md:items-start md:px-12">
           <div className="flex flex-col items-start">
             <Image
-              src="/assets/edisii-footer.svg"
+              src="/assets/edisii-footer2.svg"
               alt={`${siteSettings.companyName} logo`}
               width={154}
               height={40}
               className="h-auto w-[148px] md:w-[154px]"
             />
-            <p className="mt-4 text-[12px] text-zinc-900">
+            <p className="mt-4 text-[12px] text-white">
               Copyright 2026 by EDISII. All right reserved.
             </p>
           </div>
@@ -32,13 +32,13 @@ export function PublicShell({ children }: PublicShellProps) {
           <div className="flex flex-col gap-1 text-[14px] leading-[1.2] text-zinc-900 md:pt-0.5">
             <div className="flex items-start gap-2.5">
               <span className="w-3 text-[14px] text-zinc-500">E.</span>
-              <a href={`mailto:${siteSettings.contactEmail}`} className="font-semibold hover:underline">
+              <a href={`mailto:${siteSettings.contactEmail}`} className="text-white font-semibold hover:underline">
                 {siteSettings.contactEmail}
               </a>
             </div>
             <div className="flex items-start gap-2.5">
               <span className="w-3 text-[14px] text-zinc-500">P.</span>
-              <a href={`tel:${siteSettings.contactPhone}`} className="font-semibold hover:underline">
+              <a href={`tel:${siteSettings.contactPhone}`} className="text-white font-semibold hover:underline">
                 {siteSettings.contactPhone}
               </a>
             </div>
@@ -48,7 +48,7 @@ export function PublicShell({ children }: PublicShellProps) {
                 href={siteSettings.contactInstagramUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="font-semibold hover:underline"
+                className="text-white font-semibold hover:underline"
               >
                 {siteSettings.contactInstagram}
               </a>

@@ -34,6 +34,18 @@ const officeSlides: Slide[] = [
     imageUrl: "/assets/image-02-Rev.jpg",
     imageAlt: "EDISII studio collaboration",
   },
+  {
+    id: 3,
+    align: "left",
+    imageUrl: "/assets/office-03.png",
+    imageAlt: "EDISII studio collaboration",
+  },
+  {
+    id: 4,
+    align: "left",
+    imageUrl: "/assets/office-04.png",
+    imageAlt: "EDISII studio collaboration",
+  }
 ];
 
 export function OfficeSection({ eyebrow, title, description, secondaryDescription }: OfficeSectionProps) {
@@ -179,7 +191,6 @@ export function OfficeSection({ eyebrow, title, description, secondaryDescriptio
                 >
                   <FrostPanel className="w-full max-w-[320px] rounded-none px-4 py-4 shadow-[0_16px_32px_rgba(0,0,0,0.08)] sm:max-w-[340px] sm:px-6 sm:py-6 md:max-w-[360px] md:px-8 md:py-9">
                     <h2 className="text-[28px] leading-none text-stone-950 sm:text-[32px]">{title}</h2>
-                    <div className="mt-4 h-px w-full bg-black/10" />
                     <div className="mt-4 space-y-3 text-[14px] leading-[1.5] text-stone-800 sm:mt-5 sm:space-y-4 sm:text-[16px] sm:leading-[1.55]">
                       <p>{description}</p>
                       <p>{secondaryDescription}</p>
