@@ -106,9 +106,9 @@ export const homepageSections = {
     eyebrow: "Authenticity",
     title: "CERTIFICATE",
     description:
-      "Every work published by EDISII is accompanied by an official Certificate of Authenticity, serving as a definitive guarantee of its origin and limited-edition status. This document meticulously details the artist's signature, the specific edition number, and the high-quality archival materials used in the printing process.",
+      "Each certificate issued by EDISII is an essential part of the artwork itself—inseparable from its identity, authenticity, and value. It establishes a direct correlation to the artwork, confirming its origin, authorship, and legitimacy.",
     secondaryDescription:
-      "More than just a piece of paper, this certificate protects the long-term value of your investment, ensuring that your acquisition remains a verified and prestigious part of your collection for years to come.",
+      "Every certificate is assigned a unique code and finished with an embossed mark for secure verification, with its data carefully recorded and stored for long-term traceability. In addition, each artwork is accompanied by an NFC smart tag that collectors can tap or scan to access the artwork details.",
     images: [
       {
         url: "/assets/certificate-image-1.png",

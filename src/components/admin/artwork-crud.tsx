@@ -402,7 +402,7 @@ export function ArtworkCrud() {
                     <td className="px-4 py-4 text-[13px] text-slate-700">{item.edition}</td>
                     <td className="px-4 py-4 text-[13px] text-slate-700">{item.year}</td>
                     <td className="max-w-[220px] px-4 py-4 text-[13px] text-slate-700">
-                      <span className="block break-all">{item.url}</span>
+                      <span className="block break-all">edisii.com{item.url}</span>
                     </td>
                     <td className="px-4 py-4">
                       <span
