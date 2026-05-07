@@ -49,8 +49,8 @@ export default function CertArtPage({ searchParams }: CertArtPageProps) {
           </div>
 
           <div className="flex flex-1 flex-col pt-7">
-            <div className="mx-auto max-w-[214px] text-center">
-              <p className="text-[12px] leading-[1.46] text-zinc-500">
+            <div className="mx-auto text-center px-7">
+              <p className="text-[16px] leading-[1.46] text-zinc-500">
                 This code serves as a verification mark confirming that the art is a genuine and
                 authentic piece, officially created by an artist affiliated with EDISII.
               </p>
@@ -66,7 +66,7 @@ export default function CertArtPage({ searchParams }: CertArtPageProps) {
                 </Link>
               </div>
 
-              <div className="mt-9 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-center text-[12px] text-zinc-900">
+              <div className="mt-10 pb-10 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-center text-[16px] text-zinc-900">
                 <a href="mailto:info@edisii.com" className="truncate">
                   info@edisii.com
                 </a>
